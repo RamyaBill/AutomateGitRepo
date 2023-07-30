@@ -24,7 +24,7 @@ jobs:
             const parsedDays = 0;
             const timeThreshold = parsedDays * 24 * 60 * 60 * 1000;
             
-            // Query all GH issues that are open
+            // Query all GH issues that are open test
             const issuesResponse = await github.rest.issues.listForRepo({
               owner,
               repo,
