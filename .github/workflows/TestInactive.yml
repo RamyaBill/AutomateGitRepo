@@ -29,7 +29,6 @@ jobs:
               owner,
               repo,
               labels: openLabel,
-              state: "Open",  
             });
 
             for (const issue of issuesResponse.data) {
