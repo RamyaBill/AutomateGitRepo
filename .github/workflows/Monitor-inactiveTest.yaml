@@ -2,7 +2,7 @@ name: Monitor Inactive Open Issues
 
 on:
   schedule:
-    - cron: "0 10 * * 1-5"
+    - cron: "0 15 * * *"
 
 jobs:
   inactive-labeler:
@@ -21,7 +21,7 @@ jobs:
             const openLabel = "Status: Open";
             
             //const parsedDays = parseFloat("${{ env.daysInterval }}");
-            const parsedDays = 14;
+            const parsedDays = 0;
             const timeThreshold = parsedDays * 24 * 60 * 60 * 1000;
             
             // Query all GH issues that are open
