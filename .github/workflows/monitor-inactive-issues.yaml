@@ -1,59 +1,44 @@
-name: Monitor Abandoned Issues
+name: Monitor Inactive Open Issues
 
 on:
   schedule:
-    - cron: "0 */24 * * *"
+    - cron: "0 10 * * 1-5"
 
 jobs:
-  abandoned-labeler:
+  inactive-labeler:
     runs-on: ubuntu-latest
     permissions:
       issues: write
     steps:
-      - name: Check for abandoned issues
+      - name: Check for inactive open issues
         uses: actions/github-script@v6
         env:
           daysInterval: ${{ vars.MONITORING_INTERVAL_DAYS }}
         with:
           script: |
+            // - github: A pre-authenticated octokit/rest.js client
             const { owner, repo } = context.repo;
-            const pendingLabel = "Status: Pending";
-            const abandonedLabel = "Status: Abandoned";
+            const openLabel = "Status: Open";
             
-            const parsedDays = parseFloat("${{ env.daysInterval }}");
+            //const parsedDays = parseFloat("${{ env.daysInterval }}");
+            const parsedDays = 14;
             const timeThreshold = parsedDays * 24 * 60 * 60 * 1000;
             
-            // Query all GH issues that are pending and not closed
+            // Query all GH issues that are open
             const issuesResponse = await github.rest.issues.listForRepo({
               owner,
               repo,
-              labels: pendingLabel,
-              state: "open",
+              labels: openLabel,
+              state: "open",  
             });
 
             for (const issue of issuesResponse.data) {
               const updatedAt = new Date(issue.updated_at).getTime();
               const currentTime = new Date().getTime();
-              const updateMessage = `Greetings, 
-                It's been more than ${parsedDays} days since we requested more information or an update from you on the details of this issue. Could you provide an update soon, please?
-                We're afraid that if we do not receive an update, we'll have to close this issue due to inactivity.`;
+              const updateMessage = `Please update the issue #${issue.number}.`;
 
               if (currentTime - updatedAt > timeThreshold) {
-                await github.rest.issues.addLabels({
-                  owner,
-                  repo,
-                  issue_number: issue.number,
-                  labels: [abandonedLabel],
-                });
-
-                await github.rest.issues.removeLabel({
-                  owner,
-                  repo,
-                  issue_number: issue.number,
-                  name: pendingLabel,
-                });
-
-                await github.rest.issues.createComment({
+                 await github.rest.issues.createComment({
                   owner,
                   repo,
                   issue_number: issue.number,
