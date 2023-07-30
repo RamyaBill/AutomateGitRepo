@@ -1,11 +1,11 @@
-name: Monitor Inactive Open Issues
+name: Monitor Inactive Open Issues Test
 
 on:
   schedule:
-    - cron: "11 15 * * *"
+    - cron: "30 * * * *"
 
 jobs:
-  inactive-labeler:
+  inactive-labeler-test:
     runs-on: ubuntu-latest
     permissions:
       issues: write
@@ -13,7 +13,7 @@ jobs:
       - name: Check for inactive open issues
         uses: actions/github-script@v6
         env:
-          daysInterval: ${{ vars.MONITORING_INACTIVE_INTERVAL_DAYS }}
+          //daysInterval: ${{ vars.MONITORING_INACTIVE_INTERVAL_DAYS }}
         with:
           script: |
             // - github: A pre-authenticated octokit/rest.js client
