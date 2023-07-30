@@ -29,7 +29,7 @@ jobs:
               owner,
               repo,
               labels: openLabel,
-              state: "Open",
+              state: 'open',
             });
 
             for (const issue of issuesResponse.data) {
