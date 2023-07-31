@@ -2,7 +2,7 @@ name: Test Inactive Open Issues Test
 
 on:
   schedule:
-    - cron: "05 * * * *"
+    - cron: "0 10 * * 1-5"
 
 jobs:
   inactive-labeler-test:
