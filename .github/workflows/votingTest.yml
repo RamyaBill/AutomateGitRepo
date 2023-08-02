@@ -1,0 +1,56 @@
+name: Test Most Voted Enhancement
+
+on:
+  schedule:
+    - cron: "* * * * 1-5"
+
+jobs:
+  inactive-labeler-test:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - name: Check for most voted enhancement
+        uses: actions/github-script@v6
+        env:
+          //daysInterval: ${{ vars.MONITORING_INACTIVE_INTERVAL_DAYS }}
+        with:
+          script: |
+            // - github: A pre-authenticated octokit/rest.js client
+            const { owner, repo } = context.repo;
+            const openLabel = "Status: Open";
+            const votingLabel = "Status: Voting";
+            
+            //const parsedDays = parseFloat("${{ env.daysInterval }}");
+            const parsedDays = 0;
+            const timeThreshold = parsedDays * 24 * 60 * 60 * 1000;
+            
+            // Query all GH issues for Voting 
+            const issuesResponse = await github.rest.issues.listForRepo({
+              owner,
+              repo,
+              labels: votingLabel
+              state: 'open',
+              sort: 'reactions-+1',
+              direction: 'desc',
+            });
+            
+            issuesResponse = issuesResponse.data;
+            if (issues.length === 0) {
+              core.info('No Voting issues found to process. Exiting.');
+              return;
+            }
+            for (const issue of issuesResponse.data) {
+              const updatedAt = new Date(issue.updated_at).getTime();
+              const currentTime = new Date().getTime();
+              const updateMessage = `Test voting.`;
+
+             
+                 await github.rest.issues.createComment({
+                  owner,
+                  repo,
+                  issue_number: issue.number,
+                  body: updateMessage,
+                });
+              
+            }
