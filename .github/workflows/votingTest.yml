@@ -31,8 +31,6 @@ jobs:
               repo,
               labels: votingLabel
               state: 'open',
-             // sort: 'reactions-+1',
-              //direction: 'desc',
             });
             
             issuesResponse = issuesResponse.data;
