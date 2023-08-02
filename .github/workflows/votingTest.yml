@@ -34,10 +34,7 @@ jobs:
             });
             
             issuesResponse = issuesResponse.data;
-            if (issuesResponse.length === 0) {
-              core.info('No Voting issues found to process. Exiting.');
-              return;
-            }
+
             for (const issue of issuesResponse) {
               const updatedAt = new Date(issue.updated_at).getTime();
               const currentTime = new Date().getTime();
