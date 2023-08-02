@@ -36,11 +36,15 @@ jobs:
             });
             
             //issuesResponse = issuesResponse.data;
+            if (issuesResponse.data.length === 0) {
+              core.info('No Voting issues found to process. Exiting.');
+              return;
+            }
 
             for (const issue of issuesResponse.data) {
               const updatedAt = new Date(issue.updated_at).getTime();
               const currentTime = new Date().getTime();
-              const updateMessage = `Test voting.`;
+              const updateMessage = `Test voting..`;
 
               await github.rest.issues.createComment({
                 owner,
