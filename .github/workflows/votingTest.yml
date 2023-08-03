@@ -53,6 +53,6 @@ jobs:
                const currentTime = new Date().getTime();
                const updateMessage = `Test voting..`;
                //echo "::set-output name=vote-issues::$issue.number"
-               core.info('processing $issue.number');
+               core.info('processing {$issue.number}');
               
              }
