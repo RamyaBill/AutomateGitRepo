@@ -46,12 +46,13 @@ jobs:
               issuesResponse.data.sort.reactions-+1;
     
             }
+            run: |
 
-            for (const issue of issuesResponse.data) {
-              const updatedAt = new Date(issue.updated_at).getTime();
-              const currentTime = new Date().getTime();
-              const updateMessage = `Test voting..`;
-              //echo "::set-output name=vote-issues::${issue.issue.number}"
-              core.info('processing $issue.number');
+             for (const issue of issuesResponse.data) {
+               const updatedAt = new Date(issue.updated_at).getTime();
+               const currentTime = new Date().getTime();
+               const updateMessage = `Test voting..`;
+               //echo "::set-output name=vote-issues::$issue.number"
+               core.info('processing $issue.number');
               
-            }
+             }
