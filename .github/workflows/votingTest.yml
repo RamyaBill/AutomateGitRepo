@@ -36,7 +36,7 @@ jobs:
               direction: 'desc',
             });
             
-            //issuesResponse = issuesResponse.data;
+            //issuesResponse has all the issues labeled with Voting.
             if (issuesResponse.data.length === 0) {
               core.info('No Voting issues found to process. Exiting.');
               return;
@@ -48,10 +48,12 @@ jobs:
             }
 
             for (const issue of issuesResponse.data) {
+               
                const updatedAt = new Date(issue.updated_at).getTime();
                const currentTime = new Date().getTime();
                const updateMessage = `Test voting..`;
                //echo "::set-output name=vote-issues::$issue.number"
                core.info(`Processing issue #${issue.number}`);
+               core.info(`Number of +1 reactions #${issue.number.reactions-+1}`);
               
             }
