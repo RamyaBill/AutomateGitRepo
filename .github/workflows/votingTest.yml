@@ -44,7 +44,9 @@ jobs:
             //if there are more than 1 issues for voting
             if (issuesResponse.data.length > 1) {
               issuesResponse.data.sort.reactions-+1;
-              core.info('${issuesResponse.data.length}');
+              //core.info('${issuesResponse.data.length}');
+              //echo "::set-output name=vote-issues::$issuesResponse.data.length"
+              - run: echo "my_var=$issuesResponse.data.length" >> $GITHUB_OUTPUT    
             }
 
             for (const issue of issuesResponse.data) {
@@ -52,6 +54,6 @@ jobs:
                const currentTime = new Date().getTime();
                const updateMessage = `Test voting..`;
                //echo "::set-output name=vote-issues::$issue.number"
-               core.info('processing ${issue.number}');
+               core.info(${issue.number});
               
             }
