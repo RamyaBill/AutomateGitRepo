@@ -54,6 +54,6 @@ jobs:
                const updateMessage = `Test voting..`;
                //echo "::set-output name=vote-issues::$issue.number"
                core.info(`Processing issue #${issue.number}`);
-               core.info(`Number of +1 reactions #${issue.reactions-+1}`);
+               core.info(`Number of +1 reactions #${issue.reactions}`);
               
             }
