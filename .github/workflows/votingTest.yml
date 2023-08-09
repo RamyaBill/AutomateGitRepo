@@ -67,5 +67,9 @@ jobs:
             issuesResponse.data = issuesResponse.data.filter((i) => i.reactions['+1'] == MostVotes)
             
             //Sort by created by
-            issuesResponse.data.sort.created_at.asc;
+            issuesResponse.data.sort.created_at;
+            
+            if (issuesResponse.data.length >= 0) {
+                topIssues = issuesResponse.data.slice(0, count)
+                }
             
