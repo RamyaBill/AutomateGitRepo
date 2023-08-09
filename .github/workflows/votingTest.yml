@@ -44,7 +44,7 @@ jobs:
             //if there are more than 1 issues for voting
             if (issuesResponse.data.length > 1) {
               issuesResponse.data.sort.reactions-+1;
-              core.info('Number of issues for voting is #${issuesResponse.data.length}');
+              core.info('Number of issues for voting is #${issuesResponse.data.length()}');
               core.info(issuesResponse.data[0])
             }
 
@@ -55,6 +55,8 @@ jobs:
                const updateMessage = `Test voting..`;
                //echo "::set-output name=vote-issues::$issue.number"
                core.info(`Processing issue #${issue.number}`);
-               core.info(`Number of +1 reactions ${issue.reactions}`);
+               core.info(`1Number of +1 reactions ${issue.reactions['+1']}`);
+               core.info(`2Number of +1 reactions #${issue.reactions['+1']}`);
+               core.info(`3Number of +1 reactions #${issue.reactions('+1')}`);
               
             }
