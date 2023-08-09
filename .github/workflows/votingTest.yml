@@ -48,7 +48,6 @@ jobs:
             if (issuesResponse.data.length > 1) {
               issuesResponse.data.sort.reactions-+1;
               core.info('Number of issues for voting is {issuesResponse.data.length}');
-              core.info(issuesResponse.data.[0])
             }
             MostVotes = 0
 
