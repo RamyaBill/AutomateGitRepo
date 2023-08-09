@@ -52,8 +52,10 @@ jobs:
             MostVotes = 0
 
             for (const issue of issuesResponse.data) {
-              if (MostVotes == 0)// Saving the number of votes for the first issue
+              if (MostVotes == 0) { // Saving the number of votes for the first issue
                 MostVotes = issue.reactions['+1'];
+                core.info(`Most votes is  ${MostVotes}`);
+                }
 
               const updatedAt = new Date(issue.updated_at).getTime();
               const currentTime = new Date().getTime();
