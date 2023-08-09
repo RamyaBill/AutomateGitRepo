@@ -13,19 +13,13 @@ jobs:
       - name: Check for most voted enhancement
         id: vote-issues
         uses: actions/github-script@v6
-        env:
-          //daysInterval: ${{ vars.MONITORING_INACTIVE_INTERVAL_DAYS }}
         with:
           script: |
             // - github: A pre-authenticated octokit/rest.js client
             const { owner, repo } = context.repo;
             const openLabel = "Status: Open";
             const votingLabel = "Status: Voting";
-            
-            //const parsedDays = parseFloat("${{ env.daysInterval }}");
-            const parsedDays = 0;
-            const timeThreshold = parsedDays * 24 * 60 * 60 * 1000;
-            
+
             // Query all GH issues for Voting 
             // is:issue is:open label:"Status: Voting" reactions:+1>0 sort:reactions-+1-desc 
             const issuesResponse = await github.rest.issues.listForRepo({
@@ -71,6 +65,6 @@ jobs:
             
             if (issuesResponse.data.length >= 0) {
                 topIssues = issuesResponse.data.slice(0, 1)
-                //core.info('${topIssues}`);
+                core.info('${topIssues.data.length}`);
                 }
             
