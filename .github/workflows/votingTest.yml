@@ -62,7 +62,7 @@ jobs:
             issuesResponse.data = issuesResponse.data.filter((i) => i.reactions['+1'] == MostVotes)
             
             //Sort by created by
-            issuesResponse.data.sort.created_at;
+            issuesResponse.data.sort.created_at&order=desc;
             for (const issue of issuesResponse.data) {
               core.info(`Issue selected for enhancement is #${issue.number} created on ${issue.created_at}`);
               break;
