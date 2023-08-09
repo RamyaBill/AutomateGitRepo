@@ -58,10 +58,6 @@ jobs:
                 MostVotes = issue.reactions['+1'];
                 core.info(`Most votes is  ${MostVotes}`);
                 }
-
-              const updatedAt = new Date(issue.updated_at).getTime();
-              const currentTime = new Date().getTime();
-              const updateMessage = `Test voting..`;
               core.info(`Processing issue #${issue.number}`);
               core.info(`Number of +1 reactions ${issue.reactions['+1']}`);
               core.info(`Issue was created ${issue.created_at}`);
@@ -71,5 +67,5 @@ jobs:
             issuesResponse.data = issuesResponse.data.filter((i) => i.reactions['+1'] == MostVotes)
             
             //Sort by created by
-            issuesResponse.data.sort.created-asc;
+            issuesResponse.data.sort.created_at;
             
