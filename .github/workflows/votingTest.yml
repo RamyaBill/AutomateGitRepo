@@ -63,8 +63,8 @@ jobs:
             //Sort by created by
             issuesResponse.data.sort.created_at;
             
-            if (issuesResponse.data.length >= 0) {
-                topIssues = issuesResponse.data.slice(0, 1)
-                core.info('${topIssues.data.length}`);
-                }
+            //if (issuesResponse.data.length >= 0) {
+               // topIssues = issuesResponse.data.slice(0, 1)
+                //core.info('${topIssues.data.length}`);
+                //}
             
