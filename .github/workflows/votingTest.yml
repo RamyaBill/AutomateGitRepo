@@ -48,17 +48,18 @@ jobs:
             if (issuesResponse.data.length > 1) {
               issuesResponse.data.sort.reactions-+1;
               core.info('Number of issues for voting is {issuesResponse.data.length}');
-              core.info(issuesResponse.data[0])
+              core.info(issuesResponse.data.[0])
             }
+            MostVotes = 0
 
             for (const issue of issuesResponse.data) {
-               
-               const updatedAt = new Date(issue.updated_at).getTime();
-               const currentTime = new Date().getTime();
-               const updateMessage = `Test voting..`;
-               core.info(`Processing issue #${issue.number}`);
-               core.info(`Number of +1 reactions ${issue.reactions['+1']}`);
-               
-               core.info(`Issue was created ${issue.created_at}`);
-              
+              if (MostVotes == 0)// Saving the number of votes for the first issue
+                MostVotes = issue.reactions['+1'];
+
+              const updatedAt = new Date(issue.updated_at).getTime();
+              const currentTime = new Date().getTime();
+              const updateMessage = `Test voting..`;
+              core.info(`Processing issue #${issue.number}`);
+              core.info(`Number of +1 reactions ${issue.reactions['+1']}`);
+              core.info(`Issue was created ${issue.created_at}`);
             }
