@@ -27,6 +27,7 @@ jobs:
               repo,
               labels: votingLabel,
               state: 'open',
+              reactions: '+1>0', 
               sort: 'reactions-+1',
               direction: 'desc',
             });
@@ -62,6 +63,10 @@ jobs:
             
             //Sort by created by
             issuesResponse.data.sort.created_at;
+            for (const issue of issuesResponse.data) {
+              core.info(`Issue selected for enhancement is #${issue.number} created on ${issue.created_at}`);
+              break;
+              }
             
             //if (issuesResponse.data.length >= 0) {
                // topIssues = issuesResponse.data.slice(0, 1)
