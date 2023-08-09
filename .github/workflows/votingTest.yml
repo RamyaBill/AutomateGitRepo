@@ -71,6 +71,6 @@ jobs:
             
             if (issuesResponse.data.length >= 0) {
                 topIssues = issuesResponse.data.slice(0, 1)
-                core.info('${topIssues}`);
+                //core.info('${topIssues}`);
                 }
             
