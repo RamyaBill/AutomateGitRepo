@@ -27,6 +27,7 @@ jobs:
             const timeThreshold = parsedDays * 24 * 60 * 60 * 1000;
             
             // Query all GH issues for Voting 
+            // is:issue is:open label:"Status: Voting" reactions:+1>0 sort:reactions-+1-desc 
             const issuesResponse = await github.rest.issues.listForRepo({
               owner,
               repo,
@@ -46,8 +47,9 @@ jobs:
             
             //if there are more than 1 issues for voting
             if (issuesResponse.data.length > 1) {
+              Total = issuesResponse.data.length
               issuesResponse.data.sort.reactions-+1;
-              core.info('Number of issues for voting is {issuesResponse.data.length}');
+              core.info('Number of issues for voting is ${Total}');
             }
             MostVotes = 0
 
@@ -64,3 +66,8 @@ jobs:
               core.info(`Number of +1 reactions ${issue.reactions['+1']}`);
               core.info(`Issue was created ${issue.created_at}`);
             }
+            
+            //filter out the issues with MostVotes number. This is to cover the case with more than 1 isues with the same number of votes
+            issuesResponse.data = issuesResponse.data.filter((i) => i.reactions['+1'] == MostVotes)
+            
+            
