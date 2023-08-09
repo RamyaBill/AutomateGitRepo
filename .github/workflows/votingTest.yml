@@ -56,6 +56,6 @@ jobs:
                core.info(`Processing issue #${issue.number}`);
                core.info(`Number of +1 reactions ${issue.reactions['+1']}`);
                
-               core.info(`Issue was created  #${issue.created}`);
+               core.info(`Issue was created  #${issue.created_at}`);
               
             }
