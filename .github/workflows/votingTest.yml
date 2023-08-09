@@ -41,10 +41,13 @@ jobs:
               core.info('No Voting issues found to process. Exiting.');
               return;
             }
+            //filter issues with atleast one vote
+            issuesResponse = issuesResponse.filter((i) => i.reactions['+1'] > 0)
+            
             //if there are more than 1 issues for voting
             if (issuesResponse.data.length > 1) {
               issuesResponse.data.sort.reactions-+1;
-              core.info('Number of issues for voting is #${issuesResponse.data.length[]}');
+              core.info('Number of issues for voting is ${issuesResponse.data.length}');
               core.info(issuesResponse.data[0])
             }
 
@@ -56,6 +59,6 @@ jobs:
                core.info(`Processing issue #${issue.number}`);
                core.info(`Number of +1 reactions ${issue.reactions['+1']}`);
                
-               core.info(`Issue was created  #${issue.created_at}`);
+               core.info(`Issue was created ${issue.created_at}`);
               
             }
