@@ -44,7 +44,8 @@ jobs:
             //if there are more than 1 issues for voting
             if (issuesResponse.data.length > 1) {
               issuesResponse.data.sort.reactions-+1;
-              //core.info('#${issuesResponse.data.length}');
+              core.info('Number of issues for voting is #${issuesResponse.data.length}');
+              
             }
 
             for (const issue of issuesResponse.data) {
