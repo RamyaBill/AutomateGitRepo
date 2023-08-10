@@ -27,7 +27,6 @@ jobs:
               repo,
               labels: votingLabel,
               state: 'open',
-              reactions: '+1>0', 
               sort: 'reactions-+1',
               direction: 'desc',
             });
@@ -38,7 +37,7 @@ jobs:
               return;
             }
             //filter issues with atleast one vote
-            //issuesResponse.data = issuesResponse.data.filter((i) => i.reactions['+1'] > 0)
+            issuesResponse.data = issuesResponse.data.filter((i) => i.reactions['+1'] > 0)
             
             //if there are more than 1 issues for voting, then sort by reactions.
             if (issuesResponse.data.length > 1) {
