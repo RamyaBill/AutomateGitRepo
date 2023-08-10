@@ -50,7 +50,7 @@ jobs:
             for (const issue of issuesResponse.data) {
               if (MostVotes == 0) { // Saving the number of votes for the first issue
                 MostVotes = issue.reactions['+1'];
-                core.info(`Most votes is  ${MostVotes}`);
+                core.info(`Highest votes is  ${MostVotes}`);
                 }
               core.info(`Processing issue #${issue.number}`);
               core.info(`Number of +1 reactions ${issue.reactions['+1']}`);
@@ -64,6 +64,6 @@ jobs:
             issuesResponse.data.sort.created_at;
             //issuesResponse.data.direction.ascending;
             for (const issue of issuesResponse.data) {
-              core.info(`Issue selected for enhancement is #${issue.number} created on ${issue.created_at}`);
+              //core.info(`Issue selected for enhancement is #${issue.number} created on ${issue.created_at}`);
               }
             core.info(`Issue selected for enhancement is #${issue.number} created on ${issue.created_at}`);
