@@ -65,6 +65,5 @@ jobs:
             //issuesResponse.data.direction.ascending;
             for (const issue of issuesResponse.data) {
               core.info(`Issue selected for enhancement is #${issue.number} created on ${issue.created_at}`);
-              break;
               }
-            
+            core.info(`Issue selected for enhancement is #${issue.number} created on ${issue.created_at}`);
