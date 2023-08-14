@@ -48,6 +48,7 @@ jobs:
             if (issuesResponse.data.length > 1) {
               Total = issuesResponse.data.length
               issuesResponse.data.sort.reactions-+1;
+              core.info(issuesResponse.data.size());
             }
             MostVotes = 0
 
