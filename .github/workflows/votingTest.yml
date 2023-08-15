@@ -66,12 +66,16 @@ jobs:
             
             //Sort by created by
             //issuesResponse.data = issuesResponse.data.sort.created_at;
-            issuesResponse.data.sort.created_at;
+            //issuesResponse.data.sort.created_at;
             //issuesResponse.data.direction.ascending;
-            Oldest;
+
+            const issues1 = issuesResponse.data
+                .map(l => new Date(l.created_at).getTime())
+                .sort();
+            Oldest = new Date();
             for (const issue of issuesResponse.data) {
                 if (Oldest== null)
-                  Oldest = new Date (issue.created_at);
+                  Oldest = new Date(issue.created_at);
             
               core.info(`Issue selected for enhancement is #${issue.number} created on ${issue.created_at}`);
               break;
