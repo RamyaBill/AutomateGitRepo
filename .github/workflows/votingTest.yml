@@ -72,7 +72,7 @@ jobs:
                 if (OldestDate== null) {
                   OldestDate = new Date(issue.created_at);
                   OldestIssue = issue;
-                  core.info(${OldestDate});
+                  core.info(`${OldestDate}`);
                   }
                 if(issue.created_at < OldestDate)  {
                   OldestDate = issue.created_at;
