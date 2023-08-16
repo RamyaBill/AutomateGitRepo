@@ -65,12 +65,18 @@ jobs:
             issuesResponse.data = issuesResponse.data.filter((i) => i.reactions['+1'] == MostVotes)
             
             //Sort by created by       
-            issuesResponse.data.sort.created_at.getTime();
-            
-            Oldest = new Date();
+            issuesResponse.data.sort.created_at;
+            OldestIssue;
+            OldestDate = new Date();
             for (const issue of issuesResponse.data) {
-                if (Oldest== null)
-                  Oldest = new Date(issue.created_at);
+                if (OldestDate== null) {
+                  OldestDate = new Date(issue.created_at);
+                  OldestIssue = issue;
+                  }
+                if(issue.created_at < OldestDate)  {
+                  OldestDate = issue.created_at;
+                  OldestIssue = issue;
+                }
             
               core.info(`Issue selected for enhancement is #${issue.number} created on ${issue.created_at}`);
               //break;
