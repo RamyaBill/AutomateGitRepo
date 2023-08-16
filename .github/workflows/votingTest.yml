@@ -80,7 +80,7 @@ jobs:
                   //core.info(`OldestIssue.number`);
                   //core.info(`OldestIssue[number]`);
                   //core.info(`#${OldestIssue.number}`);
-                  core.info(${OldestIssue.number});
+                  //core.info(${OldestIssue.number});
                 }
             
               core.info(`Issue selected for enhancement is #${issue.number} created on ${issue.created_at}`);
