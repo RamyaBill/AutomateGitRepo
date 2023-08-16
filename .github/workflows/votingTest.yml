@@ -76,7 +76,7 @@ jobs:
                   OldestIssue = issue;
                   core.info(`${OldestDate}`);
                   }
-                if(issueDate < OldestDate)  {
+                if(issueDate > OldestDate)  {
                   OldestDate = issueDate;
                   OldestIssue = issue;
                   core.info(`Processing issue #${issue.number}`);
