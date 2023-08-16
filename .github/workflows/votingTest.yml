@@ -71,7 +71,7 @@ jobs:
             core.info(`${OldestDate}`);
             for (const issue of issuesResponse.data) {
                 
-                if (OldestDate== null) {
+                if (OldestDate == 0) {
                   OldestDate = new Date(issue.created_at);
                   OldestIssue = issue;
                   core.info(`${OldestDate}`);
