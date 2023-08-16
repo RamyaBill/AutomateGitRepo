@@ -67,9 +67,10 @@ jobs:
             //Sort by created by       
             issuesResponse.data.sort.created_at;
             OldestIssue = 0;
-            OldestDate = new Date(null);
+            OldestDate = new Date(null).getTime();
             core.info(`${OldestDate}`);
             for (const issue of issuesResponse.data) {
+                
                 if (OldestDate== null) {
                   OldestDate = new Date(issue.created_at);
                   OldestIssue = issue;
