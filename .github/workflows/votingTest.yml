@@ -77,9 +77,9 @@ jobs:
                   OldestDate = issue.created_at;
                   OldestIssue = issue;
                   core.info(`Processing issue #${issue.number}`);
-                  core.info(`OldestIssue.number`);
+                  //core.info(`OldestIssue.number`);
                   //core.info(`OldestIssue[number]`);
-                  core.info(`#${OldestIssue.number}`);
+                  //core.info(`#${OldestIssue.number}`);
                   core.info(${OldestIssue.number});
                 }
             
