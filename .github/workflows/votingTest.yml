@@ -76,17 +76,9 @@ jobs:
                   OldestIssue = issue;
                   core.info(`${OldestDate}`);
                   }
-                if(issueDate > OldestDate)  {
+                if(issueDate < OldestDate)  {
                   OldestDate = issueDate;
                   OldestIssue = issue;
-                  core.info(`Processing issue #${issue.number}`);
-                  //core.info(`OldestIssue.number`);
-                  //core.info(`OldestIssue[number]`);
-                  //core.info(`#${OldestIssue.number}`);
-                  //core.info(${OldestIssue.number});
                 }
-            
-              core.info(`Issue selected for enhancement is #${issue.number} created on ${issue.created_at}`);
-              //break;
               }
             core.info(`Final issue selected for enhancement is ${OldestIssue.number} created on ${OldestIssue.created_at}`);
