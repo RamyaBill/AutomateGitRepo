@@ -78,7 +78,7 @@ jobs:
                   OldestIssue = issue;
                   core.info(`Processing issue #${issue.number}`);
                   core.info(`OldestIssue.number`);
-                  core.info(`OldestIssue[number]`);
+                  //core.info(`OldestIssue[number]`);
                   core.info(`#${OldestIssue.number}`);
                   core.info(${OldestIssue.number});
                 }
