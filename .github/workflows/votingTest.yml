@@ -79,4 +79,4 @@ jobs:
                   OldestIssue = issue;
                 }
               }
-            core.info(`Final issue selected for enhancement is ${OldestIssue.number} created on ${OldestIssue.created_at}`);
+            core.info(`Final issue selected for enhancement is #${OldestIssue.number} created on ${OldestIssue.created_at}`);
