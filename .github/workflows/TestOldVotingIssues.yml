@@ -40,7 +40,16 @@ jobs:
               core.info(`Issue was created ${issue.created_at}`);            
               const issueDate = new Date(issue.created_at).getTime();
               const daysSinceCreated = (now - issueDate) / 1000 / 60 / 60 / 24;
-              
+              if (daysSinceCreated > 5) { //change it to 180
+                core.info(`Closing #${issue.number} because it has not got enough votes in the last ${daysSinceCreated} days`);
+                constant message = `Greetings, closing the issue because it has not got enough votes in the last ${daysSinceCreated} days.`;
+                await github.rest.issues.removeLabel({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: issue.number,
+                  name: votingLabel,
+                });
+                }
             }
             
            
