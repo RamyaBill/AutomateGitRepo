@@ -33,6 +33,7 @@ jobs:
               core.info('No issues labelled with Voting found to process. Exiting.');
               return;
             }
+            const now = new Date().getTime();
            
             
            
