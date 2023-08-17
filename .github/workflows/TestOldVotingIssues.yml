@@ -34,6 +34,13 @@ jobs:
               return;
             }
             const now = new Date().getTime();
-           
+            
+            for (const issue of issuesResponse.data) {
+              core.info(`Processing issue #${issue.number}`);
+              core.info(`Issue was created ${issue.created_at}`);            
+              const issueDate = new Date(issue.created_at).getTime();
+              const daysSinceCreated = (now - issueDate) / 1000 / 60 / 60 / 24;
+              
+            }
             
            
