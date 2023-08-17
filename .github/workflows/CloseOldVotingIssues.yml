@@ -1,4 +1,4 @@
-name: Test Old Voted Enhancement
+name: Close Old Voted issues
 
 on:
   schedule:
