@@ -39,8 +39,8 @@ jobs:
                   const updatedAt = new Date(issue.updated_at).getTime();
                   const currentTime = new Date().getTime();
                   if(currentTime - updatedAt > timeThreshold) {
-                     webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}   # Secret name is "TEAMS_INCOMING_WEBHOOK_URL"
-                     message: Workflow run passed;
+                     webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
+                     message: Workflow run passed
                 }
               }
             
