@@ -34,7 +34,7 @@ jobs:
             issuesResponse.data = issuesResponse.data.filter((i) => ((new Date().getTime() - new Date(i.updated_at).getTime()) > timeThreshold ))
            
             for (const issue of issuesResponse.data) {
-              core.info({issue.updated_at.getTime()});
+             // core.info({issue.updated_at.getTime()});
               core.info(`Processing issue #${issue.number}`);
             
             }
