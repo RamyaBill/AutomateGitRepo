@@ -32,9 +32,9 @@ jobs:
               state: "open",  
             });
             issuesResponse.data = issuesResponse.data.filter((i) => ((new Date().getTime() - new Date(i.updated_at).getTime()) > timeThreshold ))
-           
+            echo "::set-output name=parsedDays::$parsedDays"
       - name: Store matrix
         id: save
         uses: nickofthyme/object-remap@v1
         with:
-          include.*.number: ${{ toJSON(fromJSON(parsedDays)) }}
+          include.*.number: ${{ toJSON(fromJSON(steps.fetch.outputs.parsedDays)) }}
