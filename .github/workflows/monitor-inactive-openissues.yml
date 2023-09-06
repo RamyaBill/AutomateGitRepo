@@ -1,4 +1,3 @@
-
 name: Monitor Inactive Open Issues
 
 on:
@@ -32,8 +31,10 @@ jobs:
               labels: openLabel,
               state: "open",  
             });
-      - name: sending a message
-        uses: neonidian/teams-notify-build-status@v3
-        with:
-            webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}   # Secret name is "TEAMS_INCOMING_WEBHOOK_URL"
-            message: Workflow run passed !!
+            issuesResponse.data = issuesResponse.data.filter((i) => ((new Date().getTime() - new Date(i.updated_at).getTime()) > timeThreshold ))
+           
+            for (const issue of issuesResponse.data) {
+              core.info(issue.updated_at.getTime());
+              core.info(`Processing issue #${issue.number}`);
+            
+            }
