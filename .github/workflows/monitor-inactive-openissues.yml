@@ -37,4 +37,4 @@ jobs:
         id: save
         uses: nickofthyme/object-remap@v1
         with:
-          include.*.number: ${{ toJSON(fromJSON(issuesResponse.data.number)) }}
+          include.*.number: ${{ toJSON(fromJSON(parsedDays)) }}
