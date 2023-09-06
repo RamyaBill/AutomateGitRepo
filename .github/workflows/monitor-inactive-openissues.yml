@@ -21,7 +21,7 @@ jobs:
             const openLabel = "Status: Open";
             
             //const parsedDays = parseFloat("${{ env.daysInterval }}");
-            const parsedDays = 14;
+            const parsedDays = 1; //change this to 14
             const timeThreshold = parsedDays * 24 * 60 * 60 * 1000;
             
             // Query all GH issues that are open
