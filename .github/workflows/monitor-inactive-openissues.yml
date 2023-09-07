@@ -7,8 +7,7 @@ on:
 jobs:
   inactive-labeler:
     runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.save.outputs.json }}
+   
     permissions:
       issues: write
     steps:
