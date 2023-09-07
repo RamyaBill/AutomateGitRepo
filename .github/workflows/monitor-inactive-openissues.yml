@@ -13,6 +13,7 @@ jobs:
       issues: write
     steps:
       - name: Check for inactive open issues
+        id: fetch
         uses: actions/github-script@v6
         with:
           script: |
@@ -32,9 +33,9 @@ jobs:
               state: "open",  
             });
             issuesResponse.data = issuesResponse.data.filter((i) => ((new Date().getTime() - new Date(i.updated_at).getTime()) > timeThreshold ))
-            echo "::set-output name=parsedDays::$parsedDays"
+            echo "::set-output name=fetch::$parsedDays"
       - name: Store matrix
         id: save
         uses: nickofthyme/object-remap@v1
         with:
-          include.*.number: ${{ toJSON(fromJSON(steps.fetch.outputs.parsedDays)) }}
+          include.*.number: ${{ toJSON(fromJSON(steps.fetch.outputs.fetch)) }}
