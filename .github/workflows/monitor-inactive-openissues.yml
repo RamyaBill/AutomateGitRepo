@@ -5,7 +5,7 @@ on:
     - cron: "* * * * 1-5"
 
 jobs:
-  inactive-label:
+  inactive-labeler:
     runs-on: ubuntu-latest
     outputs:
       matrix: ${{ steps.save.outputs.json }}
