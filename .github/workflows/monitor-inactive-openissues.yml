@@ -33,10 +33,6 @@ jobs:
               state: "open",  
             });
             issuesResponse.data = issuesResponse.data.filter((i) => ((new Date().getTime() - new Date(i.updated_at).getTime()) > timeThreshold ))
-            
-            echo "parsedDays=$( echo "$parsedDays" )" >> $GITHUB_OUTPUT
-      - name: Store matrix
-        id: save
-        uses: nickofthyme/object-remap@v1
-        with:
-          include.*.number: ${{ toJSON(fromJSON(steps.parsedDays.outputs.parsedDays)) }}
+            core.info(#{parsedDays});
+            //echo "parsedDays=$( echo "$parsedDays" )" >> $GITHUB_OUTPUT
+
