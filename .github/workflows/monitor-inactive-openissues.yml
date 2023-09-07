@@ -13,7 +13,7 @@ jobs:
       issues: write
     steps:
       - name: Check for inactive open issues
-        id: fetch
+        id: parsedDays
         uses: actions/github-script@v6
         with:
           script: |
@@ -34,9 +34,9 @@ jobs:
             });
             issuesResponse.data = issuesResponse.data.filter((i) => ((new Date().getTime() - new Date(i.updated_at).getTime()) > timeThreshold ))
             
-            echo "fetch=$( echo "$parsedDays" )" >> $GITHUB_OUTPUT
+            echo "parsedDays=$( echo "$parsedDays" )" >> $GITHUB_OUTPUT
       - name: Store matrix
         id: save
         uses: nickofthyme/object-remap@v1
         with:
-          include.*.number: ${{ toJSON(fromJSON(steps.fetch.outputs.fetch)) }}
+          include.*.number: ${{ toJSON(fromJSON(steps.parsedDays.outputs.parsedDays)) }}
