@@ -33,7 +33,8 @@ jobs:
               state: "open",  
             });
             issuesResponse.data = issuesResponse.data.filter((i) => ((new Date().getTime() - new Date(i.updated_at).getTime()) > timeThreshold ))
-            echo "::set-output name=fetch::$parsedDays"
+            
+            echo "fetch=$( echo "$parsedDays" )" >> $GITHUB_OUTPUT
       - name: Store matrix
         id: save
         uses: nickofthyme/object-remap@v1
