@@ -33,13 +33,13 @@ jobs:
               state: "open",  
             });
             issuesResponse.data = issuesResponse.data.filter((i) => ((new Date().getTime() - new Date(i.updated_at).getTime()) > timeThreshold ))
-            issuesResponse = issuesResponse.data
+            issuesResponseData = issuesResponse.data
             core.info(`Parsed days is ${parsedDays}`);
             //echo "parsedDays=$( echo "$parsedDays" )" >> $GITHUB_OUTPUT
-            return issuesResponse
+            return issuesResponseData
       - name: Store matrix
         id: save
         uses: nickofthyme/object-remap@v1
         with :
-          run: echo "${{steps.parsedDays.outputs.issuesResponse}}"
+          run: echo "${{steps.parsedDays.outputs.issuesResponseData}}"
             
