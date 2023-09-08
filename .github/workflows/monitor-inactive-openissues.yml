@@ -38,7 +38,7 @@ jobs:
             //echo "parsedDays=$( echo "$parsedDays" )" >> $GITHUB_OUTPUT
             const issuesResponseData = issuesResponse.data.map((issue) => issue.number);
             //(response) => response.data.map((issue) => issue.title)  
-            echo "issuesResponseData=$( echo "$issuesResponseData[1]" )" >> $GITHUB_OUTPUT
+            //echo "issuesResponseData=$( echo "$issuesResponseData[1]" )" >> $GITHUB_OUTPUT
             return issuesResponseData
       - name: Store matrix
         id: save
