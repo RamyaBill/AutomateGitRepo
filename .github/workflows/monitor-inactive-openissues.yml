@@ -41,6 +41,5 @@ jobs:
         id: save
         uses: nickofthyme/object-remap@v1
         with :
-          run: echo "${{steps.parsedDays.outputs.issuesResponseData}}"
           include.*.number: ${{ toJSON((steps.parsedDays.outputs.issuesResponseData)) }}
             
