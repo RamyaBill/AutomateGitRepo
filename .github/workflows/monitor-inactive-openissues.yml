@@ -33,9 +33,11 @@ jobs:
               state: "open",  
             });
             issuesResponse.data = issuesResponse.data.filter((i) => ((new Date().getTime() - new Date(i.updated_at).getTime()) > timeThreshold ))
-            issuesResponseData = issuesResponse.data
+            
             core.info(`Parsed days is ${parsedDays}`);
             //echo "parsedDays=$( echo "$parsedDays" )" >> $GITHUB_OUTPUT
+            const issuesResponseData = issuesResponse.data.map((issue) => issue.number);
+            //(response) => response.data.map((issue) => issue.title)  
             return issuesResponseData
       - name: Store matrix
         id: save
