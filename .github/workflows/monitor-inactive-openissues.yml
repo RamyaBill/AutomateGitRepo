@@ -41,5 +41,5 @@ jobs:
         id: save
         uses: nickofthyme/object-remap@v1
         with :
-          run: echo "${{steps.parsedDays.outputs.issuesResponse)}}"
+          run: echo "${{steps.parsedDays.outputs.issuesResponse}}"
             
