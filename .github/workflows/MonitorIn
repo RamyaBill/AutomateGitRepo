@@ -1,0 +1,51 @@
+name: Monitor Inactive
+
+on:
+  schedule:
+    - cron: "* * * * 1-5"
+
+jobs:
+  inactive-labeler:
+    runs-on: ubuntu-latest
+    outputs:
+      matrix: ${{ steps.save.outputs.json }}
+    permissions:
+      issues: write
+    steps:
+      - name: Check for inactive open issues
+        id: parsedDays
+        uses: actions/github-script@v6
+        with:
+          script: |
+            // - github: A pre-authenticated octokit/rest.js client
+            const { owner, repo } = context.repo;
+            const openLabel = "Status: Open";
+            
+            //const parsedDays = parseFloat("${{ env.daysInterval }}");
+            const parsedDays = 1; //change this to 14
+            const timeThreshold = parsedDays * 24 * 60 * 60 * 1000;
+            
+            // Query all GH issues that are open
+            const issuesResponse = await github.rest.issues.listForRepo({
+              owner,
+              repo,
+              labels: openLabel,
+              state: "open",  
+            });
+            issuesResponse.data = issuesResponse.data.filter((i) => ((new Date().getTime() - new Date(i.updated_at).getTime()) > timeThreshold ))
+            
+            core.info(`Parsed days is ${parsedDays}`);
+            //echo "parsedDays=$( echo "$parsedDays" )" >> $GITHUB_OUTPUT
+            const issuesResponseData = issuesResponse.data.map((issue) => issue.number).sort();
+            if (issuesResponseData.length > 0) {
+                lastIssue = issuesResponseData[issuesResponseData.length - 1];
+                core.info(`lastIssue is ${lastIssue}`);
+              }
+             
+
+            //(response) => response.data.map((issue) => issue.title)  
+            //echo "issuesResponseData=$( echo "$issuesResponseData[1]" )" >> $GITHUB_OUTPUT
+            //run: echo "{issuesList}={issuesResponseData}" >> $GITHUB_OUTPUT
+            //return issuesResponseData
+
+   
