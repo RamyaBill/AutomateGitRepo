@@ -2,7 +2,7 @@ name: Monitor Inactive
 
 on:
   schedule:
-    - cron: "* * * * 1-5"
+    - cron: "0 10 * * 1-5"
 
 jobs:
   inactive-labeler:
@@ -13,14 +13,16 @@ jobs:
       - name: Check for inactive open issues
         id: issueList
         uses: actions/github-script@v6
+        env:
+          daysInterval: ${{ vars.MONITORING_INACTIVE_INTERVAL_DAYS }}
         with:
           script: |
             // - github: A pre-authenticated octokit/rest.js client
             const { owner, repo } = context.repo;
             const openLabel = "Status: Open";
             
-            //const parsedDays = parseFloat("${{ env.daysInterval }}");
-            const parsedDays = 1; //change this to 14
+            const parsedDays = parseFloat("${{ env.daysInterval }}");
+            //const parsedDays = 14; 
             const timeThreshold = parsedDays * 24 * 60 * 60 * 1000;
             
             // Query all GH issues that are open
@@ -40,7 +42,6 @@ jobs:
               }
             const issueList =  issuesResponseData.toString();
             core.info(issueList);
-            //core.setOutput('issueList', 'issueList');
             return issueList;
 
       - uses: neonidian/teams-notify-build-status@v3
