@@ -36,12 +36,12 @@ jobs:
             
             core.info(`Parsed days is ${parsedDays}`);
             const issuesResponseData = issuesResponse.data.map((issue) => issue.number);
+            issueList = null;
             if (issuesResponseData.length > 0) {
+                issueList =  issuesResponseData.toString();
                 core.info(`The issues to update are : `);
                 core.info(issuesResponseData.toString());
               }
-            const issueList =  issuesResponseData.toString();
-            core.info(issueList);
             return issueList;
 
       - uses: neonidian/teams-notify-build-status@v3
