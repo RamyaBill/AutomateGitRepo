@@ -36,7 +36,7 @@ jobs:
             
             core.info(`Parsed days is ${parsedDays}`);
             //echo "parsedDays=$( echo "$parsedDays" )" >> $GITHUB_OUTPUT
-            const issuesResponseData = issuesResponse.data.map((issue) => issue.number).sort();
+            const issuesResponseData = issuesResponse.data.map((issue) => issue.number);
             if (issuesResponseData.length > 0) {
                 lastIssue = issuesResponseData[issuesResponseData.length - 1];
                 core.info(`lastIssue is ${lastIssue}`);
