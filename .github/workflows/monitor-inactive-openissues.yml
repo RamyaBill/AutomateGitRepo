@@ -41,11 +41,10 @@ jobs:
                 core.info(`The issues to update are : `);
                 core.info(issuesResponseData.toString());
                 return issueList;
-              }
-          
+              }          
 
       - uses: neonidian/teams-notify-build-status@v3
         if: ${{ steps.issueList.outputs.result}}   
         with:
            webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}   # Secret name is "TEAMS_INCOMING_WEBHOOK_URL"
-           message: The following Github issues needs to be updated ${{ steps.issueList.outputs.result }} !!   
+           message: The following Github issues need to be updated: ${{ steps.issueList.outputs.result }} .  
