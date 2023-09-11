@@ -13,7 +13,7 @@ jobs:
       issues: write
     steps:
       - name: Check for inactive open issues
-        id: parsedDays
+        id: issueList
         uses: actions/github-script@v6
         with:
           script: |
@@ -37,10 +37,13 @@ jobs:
             core.info(`Parsed days is ${parsedDays}`);
             const issuesResponseData = issuesResponse.data.map((issue) => issue.number);
             if (issuesResponseData.length > 0) {
-                core.info(`The issue to update are : {issuesResponseData.toString()}`);
+                core.info(`The issues to update are : `);
+                core.info(issuesResponseData.toString());
               }
+            const issueList =  issuesResponseData.toString();
+            return issueList;
 
       - uses: neonidian/teams-notify-build-status@v3
         with:
            webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}   # Secret name is "TEAMS_INCOMING_WEBHOOK_URL"
-           message: Workflow run passed !!   
+           message: The following Github issues needs to be updated ${{ steps.issueList.outputs.issueList }} !!   
