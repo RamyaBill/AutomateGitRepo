@@ -41,9 +41,9 @@ jobs:
                 issueList =  issuesResponseData.toString();
                 core.info(`The issues to update are : `);
                 core.info(issuesResponseData.toString());
+                return issueList;
               }
-            core.info(`Parsed days is ${issueList}`); 
-            return issueList;
+          
 
       - uses: neonidian/teams-notify-build-status@v3
         if: ${{ steps.issueList.outputs.result!= null}}   
