@@ -20,7 +20,7 @@ jobs:
             // - github: A pre-authenticated octokit/rest.js client
             const { owner, repo } = context.repo;
             const votingLabel = "Status: Voting";
-            const openLabel = "Status: Open";
+            
             const parsedDays = parseFloat("${{ env.daysInterval }}");
 
             // Query all GH issues for Voting 
@@ -57,21 +57,13 @@ jobs:
                   issue_number: issue.number,
                   name: votingLabel,
                 });
-
-               await github.rest.issues.removeLabel({
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  issue_number: issue.number,
-                  name: openLabel,
-                });
                 
                 await github.rest.issues.createComment({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
                   issue_number: issue.number,
                   body: message,
-                });                
-                
+                });  
                
                 await github.rest.issues.update({
                   owner: context.repo.owner,
