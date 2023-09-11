@@ -40,6 +40,7 @@ jobs:
               }
             const issueList =  issuesResponseData.toString();
             core.info(issueList);
+            //core.setOutput('issueList', 'issueList');
             return issueList;
 
       - uses: neonidian/teams-notify-build-status@v3
