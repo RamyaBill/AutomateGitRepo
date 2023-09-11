@@ -40,7 +40,7 @@ jobs:
             if (issuesResponseData.length > 0) {
                 lastIssue = issuesResponseData[issuesResponseData.length - 1];
                 core.info(`lastIssue is ${lastIssue}`);
-                core.info(`issuesResponseData.toString()`);
+                core.info(`$(issuesResponseData.toString())`);
 
               }
              
