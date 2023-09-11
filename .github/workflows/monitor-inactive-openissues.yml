@@ -1,4 +1,4 @@
-name: Monitor Inactive
+name: Monitor Inactive Open Issues
 
 on:
   schedule:
