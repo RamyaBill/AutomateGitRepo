@@ -7,8 +7,6 @@ on:
 jobs:
   inactive-labeler:
     runs-on: ubuntu-latest
-    outputs:
-      matrix: ${{ steps.save.outputs.json }}
     permissions:
       issues: write
     steps:
@@ -41,6 +39,7 @@ jobs:
                 core.info(issuesResponseData.toString());
               }
             const issueList =  issuesResponseData.toString();
+            core.info(issueList);
             return issueList;
 
       - uses: neonidian/teams-notify-build-status@v3
