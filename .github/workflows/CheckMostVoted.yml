@@ -1,4 +1,4 @@
-name: Test Most Voted Enhancement
+name: Select the top voted enhancement request
 
 on:
   schedule:
