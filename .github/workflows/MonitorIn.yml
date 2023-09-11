@@ -40,13 +40,8 @@ jobs:
             if (issuesResponseData.length > 0) {
                 lastIssue = issuesResponseData[issuesResponseData.length - 1];
                 core.info(`lastIssue is ${lastIssue}`);
+                core.info(`Arrays.toString(issuesResponseData)`);
 
               }
              
-
-            
-            //echo "issuesResponseData=$( echo "$issuesResponseData[1]" )" >> $GITHUB_OUTPUT
-            run: echo "{issuesList}={issuesResponseData}" >> $GITHUB_OUTPUT
-            //return issuesResponseData
-
-   
+ 
