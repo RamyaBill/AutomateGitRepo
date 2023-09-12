@@ -43,6 +43,8 @@ jobs:
                    Exiting');
               return;
             }
+
+            issuesResponse.data.sort.reactions-+1;
             
             mostVotes = 0;
             OldestIssue = 0;
