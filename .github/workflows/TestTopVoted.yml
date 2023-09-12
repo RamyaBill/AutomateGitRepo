@@ -58,8 +58,7 @@ jobs:
               if ((issueVotes >  mostVotes) && (issueDate < OldestDate)) { 
                 mostVotes = issueVotes;
                 OldestIssue = issue
-                core.info(`Highest votes is  ${mostVotes}`);
                 }
             }
-            
+            core.info(`Highest votes is  ${mostVotes}`);
             core.info(`Final issue selected for enhancement is #${OldestIssue.number} created on ${OldestIssue.created_at}`);
