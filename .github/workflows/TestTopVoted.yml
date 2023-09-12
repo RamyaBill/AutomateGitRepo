@@ -48,6 +48,7 @@ jobs:
             mostVotes = 0;
             oldestIssue = 0;
             oldestDate = new Date(null).getTime();
+            core.info(`Oldest date was ${oldestDate}`);
             for (const issue of issuesResponse.data) {
               core.info(`Processing issue #${issue.number}`);
               core.info(`Number of +1 reactions ${issue.reactions['+1']}`);
