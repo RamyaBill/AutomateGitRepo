@@ -67,3 +67,18 @@ jobs:
             }
             core.info(`Highest votes is  ${mostVotes}`);
             core.info(`Final issue selected for enhancement is #${oldestIssue.number} created on ${oldestIssue.created_at}`);
+            const message = `Greetings, this enhancement request has been selected in the voting and will be escalated to our Product Management Team.`;
+            await github.rest.issues.createComment({
+                  owner: context.repo.owner,
+                  repo: context.repo.repo,
+                  issue_number: oldestIssue.number,
+                  body: message,
+                });
+                
+            return #${oldestIssue.number};
+            
+      - uses: neonidian/teams-notify-build-status@v3
+        if: ${{ steps.vote-issues.outputs.result}}   
+        with:
+           webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}   # Secret name is "TEAMS_INCOMING_WEBHOOK_URL"
+           message: The  Github issue #${{ steps.vote-issues.outputs.result }} has been selected for voting and thus requires to be escalated. 
