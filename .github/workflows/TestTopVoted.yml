@@ -47,18 +47,18 @@ jobs:
             issuesResponse.data.sort.reactions-+1;
             
             mostVotes = 0;
-            OldestIssue = 0;
-            OldestDate = new Date(null).getTime();
+            oldestIssue = 0;
+            oldestDate = new Date(null).getTime();
             for (const issue of issuesResponse.data) {
               core.info(`Processing issue #${issue.number}`);
               core.info(`Number of +1 reactions ${issue.reactions['+1']}`);
               core.info(`Issue was created ${issue.created_at}`);
               issueVotes = issue.reactions['+1'];
               issueDate = new Date(issue.created_at).getTime();
-              if ((issueVotes >  mostVotes) && (issueDate < OldestDate)) { 
+              if ((issueVotes >  mostVotes) && (issueDate < oldestDate)) { 
                 mostVotes = issueVotes;
-                OldestIssue = issue
+                oldestIssue = issue;
                 }
             }
             core.info(`Highest votes is  ${mostVotes}`);
-            core.info(`Final issue selected for enhancement is #${OldestIssue.number} created on ${OldestIssue.created_at}`);
+            core.info(`Final issue selected for enhancement is #${oldestIssue.number} created on ${oldestIssue.created_at}`);
