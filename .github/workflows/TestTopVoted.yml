@@ -81,4 +81,4 @@ jobs:
         if: ${{ steps.vote-issues.outputs.result}}   
         with:
            webhookUrl: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}   # Secret name is "TEAMS_INCOMING_WEBHOOK_URL"
-           message: The  Github issue #${{ steps.vote-issues.outputs.result }} has been selected for voting and thus requires to be escalated. 
+           message: The  Github issue number ${{ steps.vote-issues.outputs.result }} has been selected for voting and thus requires to be escalated. 
