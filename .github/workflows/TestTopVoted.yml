@@ -55,7 +55,7 @@ jobs:
               core.info(`Issue was created ${issue.created_at}`);
               issueVotes = issue.reactions['+1'];
               issueDate = new Date(issue.created_at).getTime();
-              if ((issueVotes >  mostVotes) && (issueDate < oldestDate)) { 
+              if ((issueVotes >=  mostVotes) && (issueDate < oldestDate)) { 
                 mostVotes = issueVotes;
                 oldestIssue = issue;
                 }
