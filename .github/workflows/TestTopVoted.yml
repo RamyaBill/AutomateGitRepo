@@ -67,7 +67,8 @@ jobs:
             }
             core.info(`Highest votes is  ${mostVotes}`);
             core.info(`Final issue selected for enhancement is #${oldestIssue.number} created on ${oldestIssue.created_at}`);
-            const message = `Greetings, this enhancement request has been selected in the voting and will be escalated to our Product Management Team.`;
+            const message = `Greetings, 
+              This enhancement request has been selected in the community Voting and will be escalated to our Product Management Team.`;
             await github.rest.issues.createComment({
                   owner: context.repo.owner,
                   repo: context.repo.repo,
