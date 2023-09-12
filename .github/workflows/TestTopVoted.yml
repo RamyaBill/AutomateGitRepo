@@ -39,8 +39,7 @@ jobs:
             issuesResponse.data = issuesResponse.data.filter((i) => i.reactions['+1'] > 0)
             
             if (issuesResponse.data.length === 0) {
-              core.info('Current issues in the Voting stage do not have enough votes to qualify for selection.
-                   Exiting');
+              core.info('Current issues in the Voting stage do not have enough votes to qualify for selection. Exiting');
               return;
             }
 
