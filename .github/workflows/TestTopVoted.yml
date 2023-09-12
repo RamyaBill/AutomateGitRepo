@@ -75,7 +75,7 @@ jobs:
                   body: message,
                 });
                 
-            return #${oldestIssue.number};
+            return oldestIssue.number;
             
       - uses: neonidian/teams-notify-build-status@v3
         if: ${{ steps.vote-issues.outputs.result}}   
