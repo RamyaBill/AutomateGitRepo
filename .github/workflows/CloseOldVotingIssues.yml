@@ -2,7 +2,7 @@ name: Close enhancement requests with not enough votes
 
 on:
   schedule:
-    - cron: "* * * * 1-5"
+    - cron: "0 10 1 * *"
 
 jobs:
   oldvoting-labeler-test:
