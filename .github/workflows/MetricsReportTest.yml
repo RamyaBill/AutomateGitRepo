@@ -46,6 +46,9 @@ jobs:
         escalated_tickets=$(echo "${{ steps.issue-metrics.outputs.total_escalated }}")
         escalated_percentage=$((escalated_tickets * 100 / total_issues))
         echo "Escalated Tickets Percentage: $escalated_percentage%"     
+
+    - name: Print output of issue metrics tool
+      run: echo "${{ steps.issue-metrics.outputs.metrics }}"
         
     - name: Create issue
       uses: peter-evans/create-issue-from-file@v5
