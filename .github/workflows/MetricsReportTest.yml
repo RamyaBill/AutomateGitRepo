@@ -13,7 +13,7 @@ jobs:
     name: issue metrics
     runs-on: ubuntu-latest
     steps:
-    - name: Check for most voted enhancement
+    - name: Setting the Repo
       uses: actions/github-script@v6
       with:
           script: |
@@ -36,8 +36,8 @@ jobs:
       uses: github/issue-metrics@v2
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SEARCH_QUERY: 'repo:owner/repo is:issue created:${{ env.last_month }} -reason:"not planned"'
-
+        SEARCH_QUERY: 'repo:owner/repo is:issue created:2023-05-01..2023-05-31'
+        
     - name: Create issue
       uses: peter-evans/create-issue-from-file@v5
       with:
