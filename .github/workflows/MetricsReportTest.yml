@@ -13,6 +13,12 @@ jobs:
     name: issue metrics
     runs-on: ubuntu-latest
     steps:
+    - name: Check for most voted enhancement
+      uses: actions/github-script@v6
+      with:
+          script: |
+            // - github: A pre-authenticated octokit/rest.js client
+            const { owner, repo } = context.repo;
     - name: Get dates for last month
       shell: bash
       run: |
@@ -30,7 +36,7 @@ jobs:
       uses: github/issue-metrics@v2
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SEARCH_QUERY: 'repo:owner/repo is:issue created:${{ env.last_month }}'
+        SEARCH_QUERY: 'repo:repo is:issue created:${{ env.last_month }}'
 
     - name: Create issue
       uses: peter-evans/create-issue-from-file@v5
