@@ -33,11 +33,19 @@ jobs:
         echo "last_month=$first_day..$last_day" >> "$GITHUB_ENV"
 
     - name: Run issue-metrics tool
+      id: issue-metrics
       uses: github/issue-metrics@v2
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         LABELS_TO_MEASURE: 'Status: Open,Status:Accepted'
         SEARCH_QUERY: 'repo:RamyaBill/AutomateGitRepo is:issue created:2023-01-01..2023-12-31'
+        
+    - name: Calculate escalated tickets percentage
+      run: |
+        total_issues=$(echo "${{ steps.issue-metrics.outputs.total_issues }}")
+        escalated_tickets=$(echo "${{ steps.issue-metrics.outputs.total_escalated }}")
+        escalated_percentage=$((escalated_tickets * 100 / total_issues))
+        echo "Escalated Tickets Percentage: $escalated_percentage%"     
         
     - name: Create issue
       uses: peter-evans/create-issue-from-file@v5
