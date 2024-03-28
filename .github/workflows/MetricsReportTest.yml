@@ -43,6 +43,8 @@ jobs:
     - name: Calculate escalated tickets percentage
       run: |
         total_issues=$(echo "${{ steps.issue-metrics.outputs.metrics.total_item_count }}")
+        leng=$(echo "${{ len(steps.issue-metrics.outputs.metrics.issues_with_metrics)}}")
+        
         escalated_tickets=$(echo "${{ steps.issue-metrics.outputs.metrics.total_escalated }}")
         escalated_percentage=$((escalated_tickets * 100 / total_issues))
         echo "Escalated Tickets Percentage: $escalated_percentage%"     
