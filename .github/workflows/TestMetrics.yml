@@ -37,7 +37,7 @@ jobs:
       uses: github/issue-metrics@v2
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        LABELS_TO_MEASURE: 'Status: Open,Status:Accepted'
+        LABELS_TO_MEASURE: 'Status: Open,Status:Accepted,Status:Pending'
         SEARCH_QUERY: 'repo:RamyaBill/AutomateGitRepo is:issue created:2023-01-01..2023-12-31'
         
     - name: Calculate escalated tickets percentage
