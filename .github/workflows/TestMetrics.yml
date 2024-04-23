@@ -32,7 +32,7 @@ jobs:
         echo "$first_day..$last_day"
         echo "last_month=$first_day..$last_day" >> "$GITHUB_ENV"
 
-    - name: Run issue-metrics tool
+    - name: Run issue-metrics tool for issues opened in this month
       id: issue-metrics
       uses: github/issue-metrics@v2
       env:
@@ -43,9 +43,22 @@ jobs:
     - name: Print output of issue metrics tool
       run: echo "${{ steps.issue-metrics.outputs.metrics }}"
         
-    - name: Create issue
+    - name: Create a new issue for the issues opened in this month.
       uses: peter-evans/create-issue-from-file@v5
       with:
         title: Monthly issue metrics report
         token: ${{ secrets.GITHUB_TOKEN }}
         content-filepath: ./issue_metrics.md
+
+    - name: Run issue-metrics tool for issues closed in May 2023, may have been open in this month or earlier
+      uses: github/issue-metrics@v3
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SEARCH_QUERY: 'repo:RamyaBill/AutomateGitRepo is:issue closed:2023-01-01..2024-04-20'
+
+    - name: Create a new issue for the issues closed in this month.
+      uses: peter-evans/create-issue-from-file@v4
+      with:
+        title: Monthly issue metrics report for closed issues and prs
+        token: ${{ secrets.GITHUB_TOKEN }}
+        content-filepath: ./issue_metrics.md 
