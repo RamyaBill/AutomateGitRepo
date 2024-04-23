@@ -1,4 +1,4 @@
-name: Monthly issue metrics
+name: Testing Monthly issue metrics
 on:
   workflow_dispatch:
   schedule:
