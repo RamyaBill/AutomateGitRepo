@@ -1,0 +1,60 @@
+name: Monthly issue metrics
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '* * * * 1-5'
+
+permissions:
+  issues: write
+  pull-requests: read
+
+jobs:
+  build:
+    name: issue metrics
+    runs-on: ubuntu-latest
+    steps:
+    - name: Setting the Repo
+      uses: actions/github-script@v6
+      with:
+          script: |
+            // - github: A pre-authenticated octokit/rest.js client
+            const { owner, repo } = context.repo;
+    - name: Get dates for last month
+      shell: bash
+      run: |
+        # Calculate the first day of the previous month
+        first_day=$(date -d "last month" +%Y-%m-01)
+
+        # Calculate the last day of the previous month
+        last_day=$(date -d "$first_day +1 month -1 day" +%Y-%m-%d)
+
+        #Set an environment variable with the date range
+        echo "$first_day..$last_day"
+        echo "last_month=$first_day..$last_day" >> "$GITHUB_ENV"
+
+    - name: Run issue-metrics tool
+      id: issue-metrics
+      uses: github/issue-metrics@v2
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        LABELS_TO_MEASURE: 'Status: Open,Status:Accepted'
+        SEARCH_QUERY: 'repo:RamyaBill/AutomateGitRepo is:issue created:2023-01-01..2023-12-31'
+        
+    - name: Calculate escalated tickets percentage
+      run: |
+        total_issues=$(echo "${{ steps.issue-metrics.outputs.metrics.total_item_count }}")
+        leng=$(echo "${{ len(steps.issue-metrics.outputs.metrics.issues_with_metrics)}}")
+        
+        escalated_tickets=$(echo "${{ steps.issue-metrics.outputs.metrics.total_escalated }}")
+        escalated_percentage=$((escalated_tickets * 100 / total_issues))
+        echo "Escalated Tickets Percentage: $escalated_percentage%"     
+
+    - name: Print output of issue metrics tool
+      run: echo "${{ steps.issue-metrics.outputs.metrics }}"
+        
+    - name: Create issue
+      uses: peter-evans/create-issue-from-file@v5
+      with:
+        title: Monthly issue metrics report
+        token: ${{ secrets.GITHUB_TOKEN }}
+        content-filepath: ./issue_metrics.md
