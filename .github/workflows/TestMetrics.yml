@@ -66,9 +66,9 @@ jobs:
 
     - name: Notify MS Teams channel
       id: notify-ms-teams
-      if: ${{ success() && !steps.issue-metrics2.result == '' }}
+      
       uses: simbo/msteams-message-card-action@latest
       with:
           webhook: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
           title: Send to teams channel
-          message: <code>${{steps.issue-metrics1.outputs.metrics }}
+          message: <code>${{steps.issue-metrics1.outputs.metrics }}</code> 
