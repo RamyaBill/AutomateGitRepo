@@ -64,11 +64,24 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         content-filepath: ./issue_metrics.md 
 
-    - name: Notify MS Teams channel
-      id: notify-ms-teams
+    - name: Notify MS Teams channel with Open issues
+      id: notify-ms-teams-open
       
       uses: simbo/msteams-message-card-action@latest
       with:
           webhook: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
-          title: Send to teams channel
+          title: Payara Github community issues opened in this month
           message: <code>${{steps.issue-metrics1.outputs.metrics }}</code> 
+
+    - name: Notify MS Teams channel with closed issues
+      id: notify-ms-teams-closed
+      
+      uses: simbo/msteams-message-card-action@latest
+      with:
+          webhook: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
+          title: Payara Github community issues opened in this month
+          message: <code>${{steps.issue-metrics2.outputs.metrics }}</code>           
+          
+
+
+      
