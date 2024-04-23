@@ -63,7 +63,7 @@ jobs:
     - name: Create a new issue for the issues closed in this month.
       uses: peter-evans/create-issue-from-file@v4
       with:
-        title: Monthly issue metrics report for closed issues and prs
+        title: Monthly issue metrics report for closed issues in this month.
         token: ${{ secrets.GITHUB_TOKEN }}
         content-filepath: ./issue_metrics.md 
 
