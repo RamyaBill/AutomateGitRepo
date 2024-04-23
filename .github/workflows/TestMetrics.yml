@@ -39,16 +39,7 @@ jobs:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         LABELS_TO_MEASURE: 'Status: Open,Status:Accepted,Status:Pending'
         SEARCH_QUERY: 'repo:RamyaBill/AutomateGitRepo is:issue created:2023-01-01..2023-12-31'
-        
-    - name: Calculate escalated tickets percentage
-      run: |
-        total_issues=$(echo "${{ steps.issue-metrics.outputs.metrics.total_item_count }}")
-        leng=$(echo "${{ len(steps.issue-metrics.outputs.metrics.issues_with_metrics)}}")
-        
-        escalated_tickets=$(echo "${{ steps.issue-metrics.outputs.metrics.total_escalated }}")
-        escalated_percentage=$((escalated_tickets * 100 / total_issues))
-        echo "Escalated Tickets Percentage: $escalated_percentage%"     
-
+           
     - name: Print output of issue metrics tool
       run: echo "${{ steps.issue-metrics.outputs.metrics }}"
         
