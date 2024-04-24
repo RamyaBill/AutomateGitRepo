@@ -92,9 +92,11 @@ jobs:
 
     - name: Send to Microsoft Teams
       run: |
-          curl -X POST -H 'Content-Type: application/json' -d "{\"text\": \"$(echo "${{ steps.read-file.outputs.content }}" | sed 's/"/\\\"/g' | awk '{printf "%s\\n", $0}')\"}" ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
+          content="${{ steps.read-file.outputs.content }}"
+          json="{\"text\": \"Issue Metrics: \n${content//\"/\\\"}\"}"
+          curl -X POST -H 'Content-Type: application/json' -d "$json" "${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}"
       env:
-          MS_TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL}}
+          MS_TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
 
           
 
