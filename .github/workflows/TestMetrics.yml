@@ -91,10 +91,10 @@ jobs:
       run: echo "::set-output name=content::$(cat ./issue_metrics.md )"
 
     - name: Send to Microsoft Teams
-      uses: microsoft/teams-send-message@v1
-      with:
-          webhook_url: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
-          message: ${{ steps.read-file.outputs.content }}
+      run: |
+          curl -X POST -H 'Content-Type: application/json' -d "{\"text\": \"$(echo "${{ steps.read-file.outputs.content }}")\"}" ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
+      env:
+          MS_TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL}}
 
           
 
