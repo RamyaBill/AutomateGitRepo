@@ -86,8 +86,7 @@ jobs:
           message: <code>${{steps.issue-metrics2.outputs.metrics }}</code>    
           sections: |
             -
-              activityTitle: Issue Metrics
-              activityImage: ./issue_metrics.md 
+                activityImage: ./issue_metrics.md 
           
 
 
