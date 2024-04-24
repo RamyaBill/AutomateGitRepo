@@ -85,6 +85,18 @@ jobs:
           title: Payara Github community issues closed in this month, may have been open in this month or earlier
           message: <code>${{steps.issue-metrics2.outputs.metrics }}</code> Time to respond to an issue the first time is ${{ fromJSON(steps.issue-metrics2.outputs.metrics).average_time_to_first_response }} . The average time to close an issue is ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_to_close }}.  
 
+
+    - name: Read file content
+      id: read-file
+      run: echo "::set-output name=content::$(./issue_metrics.md )"
+
+    - name: Send to Microsoft Teams
+      uses: distributhor/action-ms-teams@v0.1.1
+      with:
+          webhook_url: ${{ TEAMS_INCOMING_WEBHOOK_URL  }}
+          message: ${{ steps.read-file.outputs.content }}
+          color: '00ff00' # Optionally, specify a color for the message
+
           
 
 
