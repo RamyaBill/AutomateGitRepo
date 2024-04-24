@@ -93,7 +93,7 @@ jobs:
     - name: Send to Microsoft Teams
       uses: distributhor/action-ms-teams@v0.1.1
       with:
-          webhook_url: ${{ TEAMS_INCOMING_WEBHOOK_URL  }}
+          webhook_url: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
           message: ${{ steps.read-file.outputs.content }}
           color: '00ff00' # Optionally, specify a color for the message
 
