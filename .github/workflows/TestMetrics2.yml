@@ -59,6 +59,14 @@ jobs:
                <p>| Time spent in Status: Open | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_in_labels['Status: Open'] }} |</p>
                <p>| Time spent in Status:Accepted | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_in_labels['Status:Accepted'] }} |</p>
                <p>| Time spent in Status:Pending | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_in_labels['Status:Pending'] }} |</p>
-               </p>
+               <p>\n </p>
+                <p>
+                |          Metric           |           Count       | \n
+                | -----------------------   | ----------------------- | \n
+                | Number of items that remain open | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).num_items_opened }} | \n
+                | Number of items closed | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).num_items_closed }} | \n
+                | Total number of items created | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).total_item_count }} | \n
+                 </p>
+          
                </code>
 
