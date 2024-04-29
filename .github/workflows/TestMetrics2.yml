@@ -44,44 +44,13 @@ jobs:
       run: echo "${{ steps.issue-metrics1.outputs.metrics }}"
         
 
-
-    - name: Run issue-metrics tool for issues closed in May 2023, may have been open in this month or earlier
-      id: issue-metrics2
-      uses: github/issue-metrics@v3
-      env:
-        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        SEARCH_QUERY: 'repo:RamyaBill/AutomateGitRepo is:issue closed:2023-01-01..2024-04-20'
+    - name: Read file content
+      id: read-file
+      run: echo "::set-output name=content::$(cat ./issue_metrics.md )"
         
-    - name: Print output of closed issues from the metrics tool
-      run: echo "${{ steps.issue-metrics2.outputs.metrics }}"
-
-
-
-
-
-    - name: Read issue_metrics.md
-      id: read_issue_metrics
-      run: |
-        content=$(cat ./issue_metrics.md)
-        echo "::set-output name=metrics::${content}"
-        
-
-    - name: Split content into smaller chunks
-      id: split_content
-      run: |
-          chunk_size=500  # Adjust chunk size as needed
-          content="${{ steps.read_issue_metrics.outputs.metrics }}"
-          while [ ${#content} -gt 0 ]; do
-            chunk="${content:0:$chunk_size}"
-            content="${content:$chunk_size}"
-            echo "::set-output name=chunk::$chunk"
-          done
 
     - name: Send to Microsoft Teams
-      if: ${{ steps.read_issue_metrics.outputs.metrics != '' }}
       run: |
-          while IFS= read -r chunk; do
-            curl -X POST -H 'Content-Type: application/json' -d '{"text": "'"$chunk"'"}' ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
-          done < <(echo "${{ steps.split_content.outputs.chunk }}")
-
-      
+          curl -X POST -H 'Content-Type: application/json' -d '{"text": "${{ steps.read_issue_metrics.outputs.content }}"}' "${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}"   
+  
+     
