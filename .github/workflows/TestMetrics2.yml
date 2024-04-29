@@ -69,10 +69,8 @@ jobs:
                 <p> </p>
                 <p>| Title | URL | Author | Time to first response | Time to close | Time to answer | Time spent in Status: Open | Time spent in Status:Accepted | Time spent in Status:Pending |</p>
                 <p>   |------- | --- |------ | --- | --- | --- | --- | --- | --- | </p>
-                <p> ${{ steps.issue-metrics1.outputs.metrics.issues.forEach(function(issue) { }}
-                <p>| ${issue.title} | ${issue.html_url} | [${issue.author}](${issue.html_url}) | ${issue.time_to_first_response} | ${issue.time_to_close} | ${issue.time_to_answer} | ${issue.label_metrics['Status: Open']} | ${issue.label_metrics['Status:Accepted']} | ${issue.label_metrics['Status:Pending']} |</p>
-                <p> ${{ }); }}
-                </p>
+                ${{ steps.issue-metrics1.outputs.metrics.issues.map(function(issue) { return `| ${issue.title} | ${issue.html_url} | [${issue.author}](${issue.html_url}) | ${issue.time_to_first_response} | ${issue.time_to_close} | ${issue.time_to_answer} | ${issue.label_metrics['Status: Open']} | ${issue.label_metrics['Status:Accepted']} | ${issue.label_metrics['Status:Pending']} |`; }).join('\n') }}
           
                </code>
 
+     
