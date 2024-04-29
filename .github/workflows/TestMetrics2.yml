@@ -50,7 +50,7 @@ jobs:
           webhook: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
           title: Payara Github community issues opened in this month
           script: |
-            const metrics =  ${{ fromJSON(steps.issue-metrics1.outputs.metrics}};
+            const metrics =  ${{ fromJSON(steps.issue-metrics1.outputs.metrics)}};
             const issues = metrics && metrics.issues ? metrics.issues : [];
           message: |
               <code>  
