@@ -62,8 +62,9 @@ jobs:
     - name: Read issue_metrics.md
       id: read_issue_metrics
       run: |
-        content=$(< ./issue_metrics.md)
+        content=$(cat ./issue_metrics.md)
         echo "::set-output name=metrics::${content}"
+        
 
     - name: Split content into smaller chunks
       id: split_content
