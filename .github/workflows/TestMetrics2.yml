@@ -54,12 +54,12 @@ jobs:
               <p>
                | Metric | Average | Median | 90th percentile |
                | --- | --- | --- | ---: |
-               | Time to first response | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_to_first_response }} | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).median_time_to_first_response }} | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).90_percentile_time_to_first_response }} |
-               | Time to close | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_to_close }} | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).median_time_to_close }} | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).90_percentile_time_to_close }} |
-               | Time to answer | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_to_answer }} | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).median_time_to_answer }} | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).90_percentile_time_to_answer }} |
-               | Time spent in Status: Open | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_in_labels['Status: Open'] }} | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).median_time_in_labels['Status: Open'] }} | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).90_percentile_time_in_labels['Status: Open'] }} |
-               | Time spent in Status:Accepted | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_in_labels['Status:Accepted'] }} | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).median_time_in_labels['Status:Accepted'] }} | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).90_percentile_time_in_labels['Status:Accepted'] }} |
-               | Time spent in Status:Pending | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_in_labels['Status:Pending'] }} | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).median_time_in_labels['Status:Pending'] }} | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).90_percentile_time_in_labels['Status:Pending'] }} |
+               | Time to first response | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_to_first_response }} | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).median_time_to_first_response }} |
+               | Time to close | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_to_close }} | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).median_time_to_close }}  |
+               | Time to answer | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_to_answer }} | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).median_time_to_answer }} | 
+               | Time spent in Status: Open | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_in_labels['Status: Open'] }} | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).median_time_in_labels['Status: Open'] }} |
+               | Time spent in Status:Accepted | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_in_labels['Status:Accepted'] }} | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).median_time_in_labels['Status:Accepted'] }} |
+               | Time spent in Status:Pending | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_in_labels['Status:Pending'] }} | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).median_time_in_labels['Status:Pending'] }} |
                </p>
                </code>
 
