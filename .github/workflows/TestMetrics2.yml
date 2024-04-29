@@ -50,20 +50,16 @@ jobs:
           webhook: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
           title: Payara Github community issues opened in this month
           message: |
-              <code>
-              <p>The average time to respond to an issue the first time is ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_to_first_response }}.</p>
-              <p>The average time to close an issue is ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_to_close }}.</p>
-                
-              
-              </code>
+              <code>  
+              <p>
+               | Metric | Average | Median | 90th percentile |
+               | --- | --- | --- | ---: |
+               | Time to first response | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_to_first_response }} | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).median_time_to_first_response }} | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).90_percentile_time_to_first_response }} |
+               | Time to close | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_to_close }} | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).median_time_to_close }} | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).90_percentile_time_to_close }} |
+               | Time to answer | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_to_answer }} | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).median_time_to_answer }} | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).90_percentile_time_to_answer }} |
+               | Time spent in Status: Open | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_in_labels['Status: Open'] }} | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).median_time_in_labels['Status: Open'] }} | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).90_percentile_time_in_labels['Status: Open'] }} |
+               | Time spent in Status:Accepted | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_in_labels['Status:Accepted'] }} | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).median_time_in_labels['Status:Accepted'] }} | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).90_percentile_time_in_labels['Status:Accepted'] }} |
+               | Time spent in Status:Pending | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_in_labels['Status:Pending'] }} | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).median_time_in_labels['Status:Pending'] }} | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).90_percentile_time_in_labels['Status:Pending'] }} |
+               </p>
+               </code>
 
-    - name: Read file content
-      id: read-file
-      run: echo "::set-output name=content::$(cat ./issue_metrics.md )"
-        
-
-    - name: Send to Microsoft Teams
-      run: |
-          curl -X POST -H 'Content-Type: application/json' -d '{"text": "${{ steps.read_issue_metrics.outputs.content }}"}' "${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}"   
-  
-     
