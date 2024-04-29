@@ -43,12 +43,7 @@ jobs:
     - name: Print output of open issues from the metrics tool 
       run: echo "${{ steps.issue-metrics1.outputs.metrics }}"
         
-    - name: Create a new issue for the issues opened in this month.
-      uses: peter-evans/create-issue-from-file@v5
-      with:
-        title: Monthly issue metrics report
-        token: ${{ secrets.GITHUB_TOKEN }}
-        content-filepath: ./issue_metrics.md
+
 
     - name: Run issue-metrics tool for issues closed in May 2023, may have been open in this month or earlier
       id: issue-metrics2
@@ -60,48 +55,32 @@ jobs:
     - name: Print output of closed issues from the metrics tool
       run: echo "${{ steps.issue-metrics2.outputs.metrics }}"
 
-    - name: Create a new issue for the issues closed in this month.
-      uses: peter-evans/create-issue-from-file@v4
-      with:
-        title: Monthly issue metrics report for closed issues in this month.
-        token: ${{ secrets.GITHUB_TOKEN }}
-        content-filepath: ./issue_metrics.md 
-
-    - name: Notify MS Teams channel with Open issues
-      id: notify-ms-teams-open
-      
-      uses: simbo/msteams-message-card-action@latest
-      with:
-          webhook: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
-          title: Payara Github community issues opened in this month
-          message: <code>${{steps.issue-metrics1.outputs.metrics }}</code> The average time to respond to an issue the first time is ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_to_first_response }}. The average time to close an issue is ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_to_close }}.
-
-    - name: Notify MS Teams channel with closed issues
-      id: notify-ms-teams-closed
-      
-      uses: simbo/msteams-message-card-action@latest
-      with:
-          webhook: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
-          title: Payara Github community issues closed in this month, may have been open in this month or earlier
-          message: <code>${{steps.issue-metrics2.outputs.metrics }}</code> Time to respond to an issue the first time is ${{ fromJSON(steps.issue-metrics2.outputs.metrics).average_time_to_first_response }} . The average time to close an issue is ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_to_close }}.  
 
 
-    - name: Read file content
-      id: read-file
-      run: echo "::set-output name=content::$(cat ./issue_metrics.md )"
+
+
+    - name: Read issue_metrics.md
+      id: read_issue_metrics
+      run: |
+        content=$(< ./issue_metrics.md)
+        echo "::set-output name=metrics::${content}"
+
+    - name: Split content into smaller chunks
+      id: split_content
+      run: |
+          chunk_size=500  # Adjust chunk size as needed
+          content="${{ steps.read_issue_metrics.outputs.metrics }}"
+          while [ ${#content} -gt 0 ]; do
+            chunk="${content:0:$chunk_size}"
+            content="${content:$chunk_size}"
+            echo "::set-output name=chunk::$chunk"
+          done
 
     - name: Send to Microsoft Teams
+      if: ${{ steps.read_issue_metrics.outputs.metrics != '' }}
       run: |
-          content="${{ steps.read-file.outputs.content }}"
-          json="{\"text\": \"Issue Metrics: \n${content//\"/\\\"}\"}"
-          curl -X POST -H 'Content-Type: application/json' -d "$json" "${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}"
-      env:
-          MS_TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
-
-    - name: Send to Microsoft Teams
-      run: |
-          curl -X POST -H 'Content-Type: application/json' -d '{"text": "${{ steps.read_issue_metrics.outputs.content }}"}' "${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}"   
-  
-
+          while IFS= read -r chunk; do
+            curl -X POST -H 'Content-Type: application/json' -d '{"text": "'"$chunk"'"}' ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
+          done < <(echo "${{ steps.split_content.outputs.chunk }}")
 
       
