@@ -48,9 +48,8 @@ jobs:
       run: |
           
           met=${{ fromJSON(steps.issue-metrics1.outputs.metrics)}};
-          issues = met && met.issues ? met.issues : [];
-          let message = 
-              '<code>  
+          issues=$((met && met.issues ? met.issues : []));
+          message='<code>  
                <p>
                   |----------- Metric ------------|--------------Average --------|</p>
                <p>|-------------------------------|------------------------------|</p>
