@@ -46,8 +46,8 @@ jobs:
     - name: Run custom script
       id: run-script
       run: |
-            const metrics =  ${{ fromJSON(steps.issue-metrics1.outputs.metrics)}};
-            const issues = metrics && metrics.issues ? metrics.issues : [];
+            metrics =  ${{ fromJSON(steps.issue-metrics1.outputs.metrics)}};
+            issues = metrics && metrics.issues ? metrics.issues : [];
             let message = 
               '<code>  
                <p>
