@@ -1,0 +1,109 @@
+name: Testing Monthly issue metrics
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '* * * * 1-5'
+
+permissions:
+  issues: write
+  pull-requests: read
+
+jobs:
+  build:
+    name: issue metrics
+    runs-on: ubuntu-latest
+    steps:
+    - name: Setting the Repo
+      uses: actions/github-script@v6
+      with:
+          script: |
+            // - github: A pre-authenticated octokit/rest.js client
+            const { owner, repo } = context.repo;
+    - name: Get dates for last month
+      shell: bash
+      run: |
+        # Calculate the first day of the previous month
+        first_day=$(date -d "last month" +%Y-%m-01)
+
+        # Calculate the last day of the previous month
+        last_day=$(date -d "$first_day +1 month -1 day" +%Y-%m-%d)
+
+        #Set an environment variable with the date range
+        echo "$first_day..$last_day"
+        echo "last_month=$first_day..$last_day" >> "$GITHUB_ENV"
+
+    - name: Run issue-metrics tool for issues opened in this month
+      id: issue-metrics1
+      uses: github/issue-metrics@v3
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        LABELS_TO_MEASURE: 'Status: Open,Status:Accepted,Status:Pending'
+        SEARCH_QUERY: 'repo:RamyaBill/AutomateGitRepo is:issue created:2023-01-01..2023-12-31'
+           
+    - name: Print output of open issues from the metrics tool 
+      run: echo "${{ steps.issue-metrics1.outputs.metrics }}"
+        
+    - name: Create a new issue for the issues opened in this month.
+      uses: peter-evans/create-issue-from-file@v5
+      with:
+        title: Monthly issue metrics report
+        token: ${{ secrets.GITHUB_TOKEN }}
+        content-filepath: ./issue_metrics.md
+
+    - name: Run issue-metrics tool for issues closed in May 2023, may have been open in this month or earlier
+      id: issue-metrics2
+      uses: github/issue-metrics@v3
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SEARCH_QUERY: 'repo:RamyaBill/AutomateGitRepo is:issue closed:2023-01-01..2024-04-20'
+        
+    - name: Print output of closed issues from the metrics tool
+      run: echo "${{ steps.issue-metrics2.outputs.metrics }}"
+
+    - name: Create a new issue for the issues closed in this month.
+      uses: peter-evans/create-issue-from-file@v4
+      with:
+        title: Monthly issue metrics report for closed issues in this month.
+        token: ${{ secrets.GITHUB_TOKEN }}
+        content-filepath: ./issue_metrics.md 
+
+    - name: Notify MS Teams channel with Open issues
+      id: notify-ms-teams-open
+      
+      uses: simbo/msteams-message-card-action@latest
+      with:
+          webhook: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
+          title: Payara Github community issues opened in this month
+          message: <code>${{steps.issue-metrics1.outputs.metrics }}</code> The average time to respond to an issue the first time is ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_to_first_response }}. The average time to close an issue is ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_to_close }}.
+
+    - name: Notify MS Teams channel with closed issues
+      id: notify-ms-teams-closed
+      
+      uses: simbo/msteams-message-card-action@latest
+      with:
+          webhook: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
+          title: Payara Github community issues closed in this month, may have been open in this month or earlier
+          message: <code>${{steps.issue-metrics2.outputs.metrics }}</code> Time to respond to an issue the first time is ${{ fromJSON(steps.issue-metrics2.outputs.metrics).average_time_to_first_response }} . The average time to close an issue is ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_to_close }}.  
+
+
+    - name: Read file content
+      id: read-file
+      run: cat ./issue_metrics.md > issue_metrics_content.txt
+           echo "::set-output name=content::$(cat ./issue_metrics_content.txt)"
+
+    - name: Send to Microsoft Teams
+      run: |
+          content="${{ steps.read-file.outputs.content }}"
+          json="{\"text\": \"Issue Metrics: \n${content//\"/\\\"}\"}"
+          curl -X POST -H 'Content-Type: application/json' -d "$json" "${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}"
+      env:
+          MS_TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
+
+    - name: Send to Microsoft Teams
+      run: |
+          curl -X POST -H 'Content-Type: application/json' -d '{"text": "${{ steps.read_issue_metrics.outputs.content }}"}' "${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}"   
+          
+  
+
+
+      
