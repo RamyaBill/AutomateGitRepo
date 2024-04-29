@@ -52,9 +52,9 @@ jobs:
           script: |
             const metrics =  ${{ fromJSON(steps.issue-metrics1.outputs.metrics)}};
             const issues = metrics && metrics.issues ? metrics.issues : [];
-          message: |
-              <code>  
-              <p>
+            let message = 
+               '<code>  
+               <p>
                   |----------- Metric ------------|--------------Average --------|</p>
                <p>|-------------------------------|------------------------------|</p>
                <p>| Time to first response | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_to_first_response }} |</p>
@@ -71,7 +71,10 @@ jobs:
                 <p>| Total number of items created | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).total_item_count }} | </p>
                 <p> </p>
                 <p>| Title | URL | Author | Time to first response | Time to close | Time to answer | Time spent in Status: Open | Time spent in Status:Accepted | Time spent in Status:Pending |</p>
-                <p>   |------- | --- |------ | --- | --- | --- | --- | --- | --- | </p>
+                <p>   |------- | --- |------ | --- | --- | --- | --- | --- | --- | </p></code>';
+            return message;     
+                
+                
 
 
      
