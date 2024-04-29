@@ -49,6 +49,9 @@ jobs:
       with:
           webhook: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
           title: Payara Github community issues opened in this month
+          script: |
+            const metrics =  ${{ fromJSON(steps.issue-metrics1.outputs.metrics}};
+            const issues = metrics && metrics.issues ? metrics.issues : [];
           message: |
               <code>  
               <p>
@@ -69,13 +72,6 @@ jobs:
                 <p> </p>
                 <p>| Title | URL | Author | Time to first response | Time to close | Time to answer | Time spent in Status: Open | Time spent in Status:Accepted | Time spent in Status:Pending |</p>
                 <p>   |------- | --- |------ | --- | --- | --- | --- | --- | --- | </p>
-                ${{ if steps.issue-metrics1.outputs.metrics }} 
-                ${{ steps.issue-metrics1.outputs.metrics.issues.map(function(issue) {
-                  return `<p>| ${issue.title} | ${issue.html_url} |</p>`;
-                }).join('\n') }}
-              ${{ else }}
-                <p>No issues found.</p>
-              ${{ endif }}
-                </code>
+
 
      
