@@ -42,7 +42,21 @@ jobs:
            
     - name: Print output of open issues from the metrics tool 
       run: echo "${{ steps.issue-metrics1.outputs.metrics }}"
-        
+
+    - name: Notify MS Teams channel with Open issues
+      id: notify-ms-teams-open
+      uses: simbo/msteams-message-card-action@latest
+      with:
+          webhook: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
+          title: Payara Github community issues opened in this month
+          message: |
+              <code>
+              <p>
+                The average time to respond to an issue the first time is ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_to_first_response }}.
+                The average time to close an issue is ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_to_close }}.
+                
+              </p>
+              </code>
 
     - name: Read file content
       id: read-file
