@@ -52,14 +52,13 @@ jobs:
           message: |
               <code>  
               <p>
-               | Metric | Average | Median | 90th percentile |</p>
-               <p>| --- | --- | --- | ---: |</p>
-               <p>| Time to first response | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_to_first_response }} | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).median_time_to_first_response }} |</p>
-               <p>| Time to close | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_to_close }} | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).median_time_to_close }}  |</p>
-               <p>| Time to answer | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_to_answer }} | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).median_time_to_answer }} | </p>
-               <p>| Time spent in Status: Open | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_in_labels['Status: Open'] }} | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).median_time_in_labels['Status: Open'] }} |</p>
-               <p>| Time spent in Status:Accepted | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_in_labels['Status:Accepted'] }} | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).median_time_in_labels['Status:Accepted'] }} |</p>
-               <p>| Time spent in Status:Pending | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_in_labels['Status:Pending'] }} | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).median_time_in_labels['Status:Pending'] }} |</p>
+                  |          Metric           |           Average       |</p>
+               <p>| -----------------------   | ----------------------- |</p>
+               <p>| Time to first response | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_to_first_response }} |</p>
+               <p>| Time to close | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_to_close }}  |</p>
+               <p>| Time spent in Status: Open | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_in_labels['Status: Open'] }} |</p>
+               <p>| Time spent in Status:Accepted | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_in_labels['Status:Accepted'] }} |</p>
+               <p>| Time spent in Status:Pending | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_in_labels['Status:Pending'] }} |</p>
                </p>
                </code>
 
