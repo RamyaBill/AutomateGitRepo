@@ -98,11 +98,10 @@ jobs:
       env:
           MS_TEAMS_WEBHOOK_URL: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
 
-    - name: Send to Microsoft Teams using issuemetrics md file 
+    - name: Send to Microsoft Teams
       run: |
-          curl -X POST -H 'Content-Type: application/json' -d '{"text": "$(cat ./issue_metrics.md)"}' "${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}"      
-
-          
+          curl -X POST -H 'Content-Type: application/json' -d '{"text": "${{ steps.read_issue_metrics.outputs.content }}"}' "${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}"   
+  
 
 
       
