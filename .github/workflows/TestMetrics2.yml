@@ -45,7 +45,9 @@ jobs:
 
     - name: Run custom script
       id: run-script
-      run: |
+      uses: actions/github-script@v6
+      with:
+        script: |
           
           met=${{ fromJSON(steps.issue-metrics1.outputs.metrics)}};
           issues=$((met && met.issues)? met.issues : []);
