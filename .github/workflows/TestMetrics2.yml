@@ -56,7 +56,7 @@ jobs:
           return issues;      
 
     - name: Print message value
-      run: echo "${{ steps.run-script.outputs.message }}"    
+      run: echo "${{ steps.run-script.outputs.issues }}"    
 
          
 
