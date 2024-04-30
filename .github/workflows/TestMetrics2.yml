@@ -51,7 +51,7 @@ jobs:
           
           const metrics = JSON.parse('${{ steps.issue-metrics1.outputs.metrics }}');
           console.log(metrics.issues);
-          const issues = JSON.parse('${{ toJSON(steps.issue-metrics1.outputs.metrics) }}').issues;
+          const issues = JSON.parse('${{ toJSON(steps.issue-metrics1.outputs.metrics).issues }}');
           
           return metrics.issues;      
 
