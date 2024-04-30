@@ -50,7 +50,7 @@ jobs:
         script: |
           
           const metrics = JSON.parse('${{ steps.issue-metrics1.outputs.metrics }}');
-          const issues = JSON.parse('${{ steps.issue-metrics1.outputs.metrics.issues() }}');
+          // const issues = JSON.parse('${{ steps.issue-metrics1.outputs.metrics.issues() }}');
           console.log(metrics);
           console.log(metrics.issues);
           return null;      
