@@ -74,8 +74,13 @@ jobs:
 
           return html;      
 
-    - name: Print message value
-      run: echo "${{ steps.run-script.outputs.html }}"    
+    - name: Notify MS Teams channel with Open issues
+      id: notify-ms-teams-open
+      uses: simbo/msteams-message-card-action@latest
+      with:
+          webhook: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
+          title: Payara Github community issues opened in this month 
+          message:  ${{ steps.run-script.outputs.html }}
 
          
 
