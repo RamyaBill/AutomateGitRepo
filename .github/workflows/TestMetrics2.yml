@@ -69,26 +69,7 @@ jobs:
       with:
           webhook: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
           title: Payara Github community issues opened in this month
-          message: |
-              <code>  
-              <p>
-                  |----------- Metric ------------|--------------Average --------|</p>
-               <p>|-------------------------------|------------------------------|</p>
-               <p>| Time to first response | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_to_first_response }} |</p>
-               <p>| Time to close | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_to_close }}  |</p>
-               <p>| Time spent in Status: Open | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_in_labels['Status: Open'] }} |</p>
-               <p>| Time spent in Status:Accepted | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_in_labels['Status:Accepted'] }} |</p>
-               <p>| Time spent in Status:Pending | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_in_labels['Status:Pending'] }} |</p>
-               <p> </p>
-                <p>
-                <p>|----------- Metric ------------|--------------Average --------|</p>
-                <p>|-------------------------------|------------------------------|</p>
-                <p>| Number of items that remain open | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).num_items_opened }} | </p>
-                <p>| Number of items closed | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).num_items_closed }} | </p>
-                <p>| Total number of items created | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).total_item_count }} | </p>
-                <p> </p>
-                <p>| Title | URL | Author | Time to first response | Time to close | Time to answer | Time spent in Status: Open | Time spent in Status:Accepted | Time spent in Status:Pending |</p>
-                <p>   |------- | --- |------ | --- | --- | --- | --- | --- | --- | </p>
+          message: ${{ steps.run-script.outputs.message }}
               
                 
                 
