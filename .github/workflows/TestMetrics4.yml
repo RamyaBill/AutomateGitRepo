@@ -59,6 +59,7 @@ jobs:
             }
 
           console.log(issuesString);
+          process.env.ISSUES_STRING = issuesString.trim();
           return { issuesString: issuesString.trim() };
           
     - name: Log issues string
