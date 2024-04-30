@@ -47,7 +47,7 @@ jobs:
       id: run-script
       run: |
           
-          met=JSON.parse('${{ steps.issue-metrics1.outputs.metrics }}');
+          metrics = ${{ fromJSON(steps.issue-metrics1.outputs.metrics)}};
           issues={ ...metrics.issues };
           message='<code>  
                <p>
