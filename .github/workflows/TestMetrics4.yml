@@ -64,8 +64,8 @@ jobs:
     - name: Log issues string
       run:  |
         issuesString="${{ steps.run-script.outputs.issuesString }}"
-        encodedIssuesString=$(echo "$issuesString" | jq -s -R -r @uri)
-        echo "Encoded issues string: $encodedIssuesString"     
+        encodedIssuesString=$(node -e "console.log(encodeURIComponent('${issuesString}'))")
+        echo "Encoded issues string: $encodedIssuesString"   
   
 
 
