@@ -51,6 +51,25 @@ jobs:
           
           const metrics = ${{ toJson(steps.issue-metrics1.outputs.metrics) }};
           const issues = metrics && metrics.issues ? metrics.issues : [];
+          let message = `<code>
+                        <p>|----------- Metric ------------|--------------Average --------|</p>
+                        <p>|-------------------------------|------------------------------|</p>
+                        <p>| Time to first response | ${metrics.average_time_to_first_response} |</p>
+                        <p>| Time to close | ${metrics.average_time_to_close}  |</p>
+                        <p>| Time spent in Status: Open | ${metrics.average_time_in_labels['Status: Open']} |</p>
+                        <p>| Time spent in Status:Accepted | ${metrics.average_time_in_labels['Status:Accepted']} |</p>
+                        <p>| Time spent in Status:Pending | ${metrics.average_time_in_labels['Status:Pending']} |</p>
+                        <p> </p>
+                        <p>|----------- Metric ------------|--------------Average --------|</p>
+                        <p>|-------------------------------|------------------------------|</p>
+                        <p>| Number of items that remain open | ${metrics.num_items_opened} | </p>
+                        <p>| Number of items closed | ${metrics.num_items_closed} | </p>
+                        <p>| Total number of items created | ${metrics.total_item_count} | </p>
+                        <p> </p>
+                        <p>| Title | URL | Author | Time to first response | Time to close | Time to answer | Time spent in Status: Open | Time spent in Status:Accepted | Time spent in Status:Pending |</p>
+                        <p>   |------- | --- |------ | --- | --- | --- | --- | --- | --- | </p>`;
+
+         
           
 
     - name: Notify MS Teams channel with Open issues
