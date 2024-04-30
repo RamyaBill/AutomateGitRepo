@@ -51,24 +51,16 @@ jobs:
           const metrics = JSON.parse('${{ steps.issue-metrics1.outputs.metrics }}');
           const issues = { ...metrics.issues };
           console.log(issues);
-          let html = ``;
-
+          let issuesString = '';
           for (const key in issues) {
             if (Object.hasOwnProperty.call(issues, key)) {
                   const issue = issues[key];
-                  html += `
-                  | ${issue.title} | ${issue.html_url} | [${issue.author}](${issue.author}) | ${issue.time_to_first_response} | ${issue.time_to_close} | ${issue.time_to_answer} | ${issue.label_metrics['Status: Open']} | ${issue.label_metrics['Status:Accepted']} | ${issue.label_metrics['Status:Pending']} |
-                  `;
+                 issuesString += `| ${issue.title} | ${issue.html_url} | [${issue.author}](${issue.html_url}) | ${issue.time_to_first_response} | ${issue.time_to_close} | ${issue.time_to_answer} | ${issue.label_metrics['Status: Open']} | ${issue.label_metrics['Status:Accepted']} | ${issue.label_metrics['Status:Pending']} |\n`;
                 }
             }
 
-          html += `
-          </p>
-          `;
-
-          console.log(html);
-
-          return issues;      
+          console.log(issuesString);
+          return { issues_string: issuesString };
 
     - name: Notify MS Teams channel with Open issues
       id: notify-ms-teams-open
@@ -96,9 +88,7 @@ jobs:
                 <p> </p>
                 <p>| Title | URL | Author | Time to first response | Time to close | Time to answer | Time spent in Status: Open | Time spent in Status:Accepted | Time spent in Status:Pending |</p>
                 <p>   |------- | --- |------ | --- | --- | --- | --- | --- | --- | </p></code>
-                <p>${{steps.run-script.outputs.issues.map(issue => `| ${issue.title} | ${issue.html_url} | [${issue.author}](${issue.html_url}) | ${issue.time_to_first_response} | ${issue.time_to_close} | ${issue.time_to_answer} | ${issue.label_metrics['Status: Open']} | ${issue.label_metrics['Status:Accepted']} | ${issue.label_metrics['Status:Pending']} |`).join('\n')
-                 }}
-                 </p>
+                <p>${{ steps.run-script.outputs.issues_string }}</p>
 
          
 
