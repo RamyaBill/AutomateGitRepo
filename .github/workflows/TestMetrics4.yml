@@ -67,6 +67,7 @@ jobs:
       run:  |
         issuesString="${{ steps.run-script.outputs.issuesString }}"
         echo "::set-output name=encoded_issues_string::$(echo '${{ steps.run-script.outputs.issuesString }}' | jq -s -R -r @uri)" 
+        console.log(${{ steps.run-script.outputs.issuesString }});
   
 
 
