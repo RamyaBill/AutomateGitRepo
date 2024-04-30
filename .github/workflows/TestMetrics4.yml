@@ -60,7 +60,8 @@ jobs:
 
           console.log(issuesString);
           console.log(typeof issuesString);
-          return issuesString;
+          console.log(issuesString.trim());
+          return issuesString.trim();
           
     - name: Log issues string
       run:  |
