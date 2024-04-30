@@ -50,7 +50,7 @@ jobs:
         script: |
           
           const metrics = ${{ toJson(steps.issue-metrics1.outputs.metrics) }};
-          const issues = metrics && metrics.issues ? metrics.issues : [];
+          const issues = ${{ toJson(steps.issue-metrics1.outputs.metrics.issues) }};
           let message = `<code>`;
           issues.forEach(issue => {
             message += `<p>| ${issue.title} | ${issue.html_url} |</p>`;
