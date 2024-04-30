@@ -59,6 +59,7 @@ jobs:
             }
 
           console.log(issuesString);
+          console.log(typeof issuesString);
           return issuesString;
           
     - name: Log issues string
