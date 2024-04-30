@@ -60,15 +60,13 @@ jobs:
 
           console.log(issuesString);
           process.env.ISSUES_STRING = issuesString.trim();
-          const base64IssuesString = Buffer.from(issuesString).toString('base64');
-          console.log('Encoded issuesString:', base64IssuesString);
-          return { issuesString: base64IssuesString};
+          return { issuesString: issuesString};
           
     - name: Log issues string
-      run:  |
-        issuesString="${{ steps.run-script.outputs.issuesString }}"
-        decodedIssuesString=$(echo "$issuesString" | base64 --decode)
-        echo "$decodedIssuesString"
+      uses: actions/github-script@v6
+      with:
+        script: |
+          console.log('${{ steps.run-script.outputs.issuesString  }}')
 
          
 
