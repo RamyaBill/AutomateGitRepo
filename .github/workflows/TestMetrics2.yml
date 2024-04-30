@@ -50,13 +50,10 @@ jobs:
         script: |
           
           const metrics = JSON.parse('${{ steps.issue-metrics1.outputs.metrics }}');
-          console.log(metrics.issues);
           const issues = { ...metrics.issues };
-          console.log(typeof metrics.issues);
-          console.log(typeof issues);
           console.log(issues);
           
-          return metrics.issues;      
+          return issues;      
 
     - name: Print message value
       run: echo "${{ steps.run-script.outputs.message }}"    
