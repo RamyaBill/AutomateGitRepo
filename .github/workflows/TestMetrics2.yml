@@ -51,6 +51,8 @@ jobs:
           
           const metrics = JSON.parse('${{ steps.issue-metrics1.outputs.metrics }}');
           const issues = JSON.parse('${{ steps.issue-metrics1.outputs.metrics.issues }}');
+          console.log(metrics);
+          console.log(metrics.issues);
           let message = `<code>`;
           issues.forEach(issue => {
             message += `<p>| ${issue.title} | ${issue.html_url} |</p>`;
