@@ -67,7 +67,8 @@ jobs:
     - name: Log issues string
       run:  |
         issuesString="${{ steps.run-script.outputs.issuesString }}"
-        test=${{ env.ISSUES_STRING }}
+        decodedIssuesString=$(echo "$issuesString" | base64 --decode)
+        echo "$decodedIssuesString"
 
          
 
