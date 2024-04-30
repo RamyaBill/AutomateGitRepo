@@ -49,9 +49,9 @@ jobs:
       with:
         script: |
           
-          const metrics = JSON.parse('${{ steps.issue-metrics1.outputs.metrics }}');
+          const metrics = ${{ fromJSON(steps.issue-metrics1.outputs.metrics) }};
           console.log(metrics.issues);
-          const iss = JSON.parse('${{ (steps.issue-metrics1.outputs.metrics).issues}}');
+          const iss = ${{ fromJSON(steps.issue-metrics1.outputs.metrics).issues }};
           return metrics.issues;      
 
     - name: Print message value
