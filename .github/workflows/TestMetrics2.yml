@@ -50,17 +50,10 @@ jobs:
         script: |
           
           const metrics = JSON.parse('${{ steps.issue-metrics1.outputs.metrics }}');
-          const issues = JSON.parse('${{ steps.issue-metrics1.outputs.metrics.issues }}');
+          const issues = JSON.parse('${{ steps.issue-metrics1.outputs.metrics.issues[] }}');
           console.log(metrics);
           console.log(metrics.issues);
-          let message = `<code>`;
-          issues.forEach(issue => {
-            message += `<p>| ${issue.title} | ${issue.html_url} |</p>`;
-          });
-
-          message += '</code>';
-
-          return message;      
+          return null;      
 
     - name: Print message value
       run: echo "${{ steps.run-script.outputs.message }}"    
