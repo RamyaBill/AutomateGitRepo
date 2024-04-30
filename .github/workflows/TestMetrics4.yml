@@ -50,7 +50,6 @@ jobs:
         script: |
           const metrics = JSON.parse('${{ steps.issue-metrics1.outputs.metrics }}');
           const issues = { ...metrics.issues };
-          console.log(issues);
           let issuesString = '';
           for (const key in issues) {
             if (Object.hasOwnProperty.call(issues, key)) {
@@ -60,8 +59,9 @@ jobs:
             }
 
           console.log(issuesString);
-          return { issues_string: issuesString };
-
+          return issuesString;
+          
+  
     - name: Notify MS Teams channel with Open issues
       id: notify-ms-teams-open
       uses: simbo/msteams-message-card-action@latest
@@ -88,7 +88,7 @@ jobs:
                 <p> </p>
                 <p>| Title | URL | Author | Time to first response | Time to close | Time to answer | Time spent in Status: Open | Time spent in Status:Accepted | Time spent in Status:Pending |</p>
                 <p>   |------- | --- |------ | --- | --- | --- | --- | --- | --- | </p></code>
-                <p>${{ steps.run-script.outputs.issues_string }}</p>
+                <p>${{ steps.run-script.outputs.issuesString}}</p>
 
          
 
