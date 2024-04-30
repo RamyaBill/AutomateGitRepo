@@ -1,0 +1,87 @@
+name: Testing Monthly issue metrics
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '* * * * 1-5'
+
+permissions:
+  issues: write
+  pull-requests: read
+
+jobs:
+  build:
+    name: issue metrics
+    runs-on: ubuntu-latest
+    steps:
+    - name: Setting the Repo
+      uses: actions/github-script@v6
+      with:
+          script: |
+            // - github: A pre-authenticated octokit/rest.js client
+            const { owner, repo } = context.repo;
+    - name: Get dates for last month
+      shell: bash
+      run: |
+        # Calculate the first day of the previous month
+        first_day=$(date -d "last month" +%Y-%m-01)
+
+        # Calculate the last day of the previous month
+        last_day=$(date -d "$first_day +1 month -1 day" +%Y-%m-%d)
+
+        #Set an environment variable with the date range
+        echo "$first_day..$last_day"
+        echo "last_month=$first_day..$last_day" >> "$GITHUB_ENV"
+
+    - name: Run issue-metrics tool for issues opened in this month
+      id: issue-metrics1
+      uses: github/issue-metrics@v3
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        LABELS_TO_MEASURE: 'Status: Open,Status:Accepted,Status:Pending'
+        SEARCH_QUERY: 'repo:RamyaBill/AutomateGitRepo is:issue created:2023-01-01..2023-12-31'
+           
+    - name: Print output of open issues from the metrics tool 
+      run: echo "${{ steps.issue-metrics1.outputs.metrics }}"
+
+    - name: Run custom script
+      id: run-script
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const metrics = JSON.parse('${{ steps.issue-metrics1.outputs.metrics }}');
+          const issues = { ...metrics.issues };
+          console.log(issues);
+          let html = `
+            <p>
+             | Title | URL | Author | Time to first response | Time to close | Time to answer | Time spent in Status: Open | Time spent in Status:Accepted | Time spent in Status:Pending |
+             | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+           `;
+
+          for (const key in issues) {
+            if (Object.hasOwnProperty.call(issues, key)) {
+                  const issue = issues[key];
+                  html += `
+                  | ${issue.title} | ${issue.html_url} | [${issue.author}](${issue.author}) | ${issue.time_to_first_response} | ${issue.time_to_close} | ${issue.time_to_answer} | ${issue.label_metrics['Status: Open']} | ${issue.label_metrics['Status:Accepted']} | ${issue.label_metrics['Status:Pending']} |
+                  `;
+                }
+            }
+
+          html += `
+          </p>
+          `;
+
+          console.log(html);
+
+          return html;      
+
+    - name: Print message value
+      run: echo "${{ steps.run-script.outputs.html }}"    
+
+         
+
+              
+                
+                
+
+
+     
