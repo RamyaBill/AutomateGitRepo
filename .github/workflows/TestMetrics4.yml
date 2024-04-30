@@ -63,7 +63,9 @@ jobs:
           
     - name: Log issues string
       run:  |
-        echo "Issues string: ${{ steps.run-script.outputs.issuesString | urlencode }}"       
+        issuesString="${{ steps.run-script.outputs.issuesString }}"
+        encodedIssuesString=$(echo "$issuesString" | jq -s -R -r @uri)
+        echo "Encoded issues string: $encodedIssuesString"     
   
 
 
