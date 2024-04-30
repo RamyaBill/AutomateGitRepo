@@ -49,7 +49,7 @@ jobs:
       with:
         script: |
           
-          const metrics = ${{ fromJSON(steps.issue-metrics1.outputs.metrics) }};
+          const metrics = JSON.parse('${{ steps.issue-metrics1.outputs.metrics }}');
           console.log(metrics.issues);
           const iss = ${{ fromJSON(steps.issue-metrics1.outputs.metrics).issues }};
           return metrics.issues;      
