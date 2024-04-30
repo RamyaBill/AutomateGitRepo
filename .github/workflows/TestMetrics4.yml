@@ -63,7 +63,7 @@ jobs:
           
     - name: Log issues string
       run:  |
-        echo "Issues string: ${{{ steps.run-script.outputs.issuesString}}}"       
+        echo "Issues string: ${{ steps.run-script.outputs.issuesString}}"       
   
 
 
