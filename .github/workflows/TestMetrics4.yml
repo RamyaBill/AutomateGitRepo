@@ -51,11 +51,7 @@ jobs:
           const metrics = JSON.parse('${{ steps.issue-metrics1.outputs.metrics }}');
           const issues = { ...metrics.issues };
           console.log(issues);
-          let html = `
-            <p>
-             | Title | URL | Author | Time to first response | Time to close | Time to answer | Time spent in Status: Open | Time spent in Status:Accepted | Time spent in Status:Pending |
-             | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-           `;
+          let html = ``;
 
           for (const key in issues) {
             if (Object.hasOwnProperty.call(issues, key)) {
