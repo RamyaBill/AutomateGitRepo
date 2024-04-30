@@ -51,9 +51,9 @@ jobs:
           
           const metrics = JSON.parse('${{ steps.issue-metrics1.outputs.metrics }}');
           console.log(metrics);
-          const issues = metrics.issues;
+          const issues = metrics.issues[];
           console.log(metrics.issues);
-          return null;      
+          return metrics.issues;      
 
     - name: Print message value
       run: echo "${{ steps.run-script.outputs.message }}"    
