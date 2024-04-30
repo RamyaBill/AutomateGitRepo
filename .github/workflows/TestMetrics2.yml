@@ -54,6 +54,7 @@ jobs:
           const issues = { ...metrics.issues };
           console.log(typeof metrics.issues);
           console.log(typeof issues);
+          console.log(issues);
           
           return metrics.issues;      
 
