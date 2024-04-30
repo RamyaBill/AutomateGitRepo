@@ -49,18 +49,19 @@ jobs:
       with:
         result-encoding: string
         script: |
-          const metrics = JSON.parse('${{ steps.issue-metrics1.outputs.metrics }}');
-          const issues = { ...metrics.issues };
-          let issuesString = '';
-          for (const key in issues) {
-            if (Object.hasOwnProperty.call(issues, key)) {
+            const metrics = JSON.parse('${{ steps.issue-metrics1.outputs.metrics }}');
+            const issues = { ...metrics.issues };
+            let issuesTable = '<table>\n';
+            issuesTable += '<tr><th>Title</th><th>URL</th><th>Author</th><th>Time to first response</th><th>Time to close</th><th>Time to answer</th><th>Time spent in Status: Open</th><th>Time spent in Status:Accepted</th><th>Time spent in Status:Pending</th></tr>\n';
+            for (const key in issues) {
+              if (Object.hasOwnProperty.call(issues, key)) {
                   const issue = issues[key];
-                 issuesString += `| ${issue.title} | ${issue.html_url} | [${issue.author}](${issue.html_url}) | ${issue.time_to_first_response} | ${issue.time_to_close} | ${issue.time_to_answer} | ${issue.label_metrics['Status: Open']} | ${issue.label_metrics['Status:Accepted']} | ${issue.label_metrics['Status:Pending']} |\n`;
+                  issuesTable += `<tr><td>${issue.title}</td><td><a href="${issue.html_url}">${issue.html_url}</a></td><td>${issue.author}</td><td>${issue.time_to_first_response}</td><td>${issue.time_to_close}</td><td>${issue.time_to_answer}</td><td>${issue.label_metrics['Status: Open']}</td><td>${issue.label_metrics['Status:Accepted']}</td><td>${issue.label_metrics['Status:Pending']}</td></tr>\n`;
                 }
             }
-
-          console.log(issuesString);
-          return issuesString;
+              issuesTable += '</table>\n';
+              console.log(issuesTable);
+              return issuesTable;
           
     - name: Log issues string
       run: echo "${{steps.run-script.outputs.result}}"
