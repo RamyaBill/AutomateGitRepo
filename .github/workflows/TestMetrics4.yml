@@ -86,9 +86,9 @@ jobs:
                 <p>
                 <table>
                 <tr><th>Metric</th><th>Average</th></tr>
-                <tr><td> Number of items that remain open </td><td>${metrics.num_items_opened}</td></tr>
-                <tr><td>Number of items closed</td><td>${metrics.num_items_closed}</td></tr>
-                <tr><td>Total number of items created</td><td>${metrics.total_item_count}</td></tr>
+                <tr><td> Number of items that remain open </td><td>${{ fromJSON(steps.issue-metrics1.outputs.metrics).num_items_opened }}</td></tr>
+                <tr><td>Number of items closed</td><td>${{ fromJSON(steps.issue-metrics1.outputs.metrics).num_items_closed }}</td></tr>
+                <tr><td>Total number of items created</td><td>${{ fromJSON(steps.issue-metrics1.outputs.metrics).total_item_count }}</td></tr>
                 </table>
 
                 <p>${{ steps.run-script.outputs.result}}</p></code>
