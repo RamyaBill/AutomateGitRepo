@@ -60,7 +60,9 @@ jobs:
 
           console.log(issuesString);
           process.env.ISSUES_STRING = issuesString.trim();
-          return { issuesString: issuesString.trim() };
+          const base64IssuesString = Buffer.from(issuesString).toString('base64');
+          console.log('Encoded issuesString:', base64IssuesString);
+          return { issuesString: base64IssuesString};
           
     - name: Log issues string
       run:  |
