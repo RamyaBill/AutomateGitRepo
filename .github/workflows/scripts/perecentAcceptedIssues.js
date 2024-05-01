@@ -15,5 +15,7 @@ module.exports = async ({github, context, core}) => {
     console.debug(`totalIssues in the last month: ${totalIssues}%`);
 
     console.debug(`Percentage of accepted issues in the `);
-    return totalIssues;
-};
+    return { 
+        number : totalIssues
+    };
+}
