@@ -12,13 +12,6 @@ module.exports = async ({github, context, core}) => {
 
     const lastMonthIssues = lastMonthIssuesResponse.data;
 
-    // Filter the last month issues to find accepted issues
-    const acceptedIssues = lastMonthIssues.filter(issue => {
-        return issue.labels.some(label => label.name === acceptLabel);
-    });
-
-    const totalIssues = lastMonthIssues.length;
-
     console.debug(`totalIssues in the last month: ${totalIssues}%`);
   
     // Calculate the percentage of accepted issues
