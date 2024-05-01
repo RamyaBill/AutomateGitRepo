@@ -2,7 +2,8 @@ module.exports = async ({github, context, core}) => {
     const { owner, repo } = context.repo;
     const acceptLabel = "Status: Accepted";
 
-
+    console.log('entering the java script file`);
+                
       // Query all issues created in the last month
      const lastMonthIssuesResponse = await github.rest.issues.listForRepo({
         owner,
