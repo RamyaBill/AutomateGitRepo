@@ -37,7 +37,7 @@ jobs:
       uses: actions/github-script@v6
       with:
         script: |
-            const script = require('./.github/workflows/scripts/perecentAcceptedIssues.js');
+            const script = require('./scripts/perecentAcceptedIssues.js');
             const percentage = await script({github, context, core});
             console.log(`Percentage of accepted issues: ${percentage}%`);
             
