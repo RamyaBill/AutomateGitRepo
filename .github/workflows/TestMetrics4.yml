@@ -33,7 +33,7 @@ jobs:
         echo "last_month=$first_day..$last_day" >> "$GITHUB_ENV"
 
     - name: Run JavaScript script
-      run: node percentAcceptedIssues.js
+      run: node /scripts/percentAcceptedIssues.js
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}    
 
