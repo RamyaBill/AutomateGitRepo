@@ -38,7 +38,7 @@ jobs:
       uses: actions/github-script@v6
       with:
         script: |
-            const script = require('./.github/workflows/scripts/percentAcceptedIssues.js');
+            const script = require('./.github/workflows/scripts/perecentAcceptedIssues.js');
             return await script({github, context, core});
             
     - name: Run issue-metrics tool for issues opened in this month
