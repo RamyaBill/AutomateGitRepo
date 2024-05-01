@@ -32,14 +32,14 @@ jobs:
         echo "$first_day..$last_day"
         echo "last_month=$first_day..$last_day" >> "$GITHUB_ENV"
 
-
     - name: Find Accepted issues percentage
       id: accept-percent-issues
       uses: actions/github-script@v6
       with:
         script: |
-            const script = require('./.github/workflows/scripts/perecentAcceptedIssues.js');
-            return await script({github, context, core});
+            const script = require('./.github/workflows/scripts/percentAcceptedIssues.js');
+            const percentage = await script({github, context, core});
+            console.log(`Percentage of accepted issues: ${percentage}%`);
             
     - name: Run issue-metrics tool for issues opened in this month
       id: issue-metrics1
