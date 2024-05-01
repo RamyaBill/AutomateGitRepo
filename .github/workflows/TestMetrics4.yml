@@ -38,8 +38,8 @@ jobs:
           const acceptLabel = "Status: Accepted";
           // Get dates for last month
           const first_day = new Date();
-          first_day.setMonth(first_day.getMonth());
-          //TO DO first_day.setMonth(first_day.getMonth() - 1);
+          //first_day.setMonth(first_day.getMonth());
+          first_day.setMonth(first_day.getMonth() - 1);
           first_day.setDate(1);
 
           console.log(`showing issues created after : ${first_day}`);
