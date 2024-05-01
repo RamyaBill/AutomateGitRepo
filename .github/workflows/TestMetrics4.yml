@@ -52,7 +52,7 @@ jobs:
           const lastMonthIssuesResponse = await github.rest.issues.listForRepo({
               owner,
               repo,
-              since: testdate.toISOString().slice(0, 10),
+              since: "2024-04-28",
               state: 'all'
           });
           const lastMonthIssuesTotal = lastMonthIssuesResponse.data;
