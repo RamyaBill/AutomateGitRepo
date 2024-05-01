@@ -36,6 +36,11 @@ jobs:
     - name: Find Accepted issues percentage
       id: accept-percent-issues
       run: node .github/workflows/scripts/perecentAcceptedIssues.js
+
+    - name: Capture script output
+      id: capture-output
+      run: echo "::set-output name=accepted-issues-percentage::$(echo "${{ steps.accept-percent-issues.outputs.stdout }}")"
+      
             
     - name: Run issue-metrics tool for issues opened in this month
       id: issue-metrics1
