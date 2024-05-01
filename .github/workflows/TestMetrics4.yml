@@ -24,6 +24,7 @@ jobs:
       run: |
         # Calculate the first day of the previous month
         first_day=$(date -d "last month" +%Y-%m-01)
+        echo "first_day=$first_day" >> "$GITHUB_ENV"
 
         # Calculate the last day of the previous month
         last_day=$(date -d "$first_day +1 month -1 day" +%Y-%m-%d)
@@ -39,10 +40,8 @@ jobs:
         script: |
           const { owner, repo } = context.repo;
           const acceptLabel = "Status: Accepted";
-          // Get dates for last month
-          const first_day = new Date();
-          first_day.setMonth(first_day.getMonth() - 1);
-          first_day.setDate(1);
+          
+          const first_day = ${{ env.first_day }} 
           
           // Query all issues created in the last month
           const lastMonthIssuesResponse = await github.rest.issues.listForRepo({
