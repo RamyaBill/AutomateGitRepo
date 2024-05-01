@@ -38,7 +38,7 @@ jobs:
           const acceptLabel = "Status: Accepted";
           // Get dates for last month
           const first_day = new Date();
-          first_day.setMonth(first_day.getMonth() - 1);
+          first_day.setMonth(first_day.getMonth());
           first_day.setDate(1);
 
           const excludedUsers = ['github-actions']; 
