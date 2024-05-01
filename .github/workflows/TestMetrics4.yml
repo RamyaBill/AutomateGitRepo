@@ -39,6 +39,7 @@ jobs:
           // Get dates for last month
           const first_day = new Date();
           first_day.setMonth(first_day.getMonth());
+          //TO DO first_day.setMonth(first_day.getMonth() - 1);
           first_day.setDate(1);
 
           const excludedUsers = ['github-actions']; 
