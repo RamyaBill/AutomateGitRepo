@@ -40,14 +40,18 @@ jobs:
           const first_day = new Date();
           first_day.setMonth(first_day.getMonth() - 1);
           first_day.setDate(1);
+
+          const excludedUsers = ['app/github-actions', 'github-actions']; 
           
           // Query all issues created in the last month
           const lastMonthIssuesResponse = await github.rest.issues.listForRepo({
               owner,
               repo,
               since: first_day.toISOString().slice(0, 10),
+              creator: excludedUsers.join(',')
               state: 'all'
           });
+          
           const lastMonthIssues = lastMonthIssuesResponse.data;
            // Filter the last month issues to find accepted issues
            const acceptedIssues = lastMonthIssues.filter(issue => {
