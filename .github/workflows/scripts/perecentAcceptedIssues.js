@@ -11,12 +11,9 @@ module.exports = async ({github, context, core}) => {
      });
 
     const lastMonthIssues = lastMonthIssuesResponse.data;
-
+    const totalIssues = lastMonthIssues.length;
     console.debug(`totalIssues in the last month: ${totalIssues}%`);
-  
-    // Calculate the percentage of accepted issues
-    const percentage = ((acceptedIssues.length / totalIssues) * 100).toFixed(2);
 
-    console.debug(`Percentage of accepted issues in the last month: ${percentage}%`);
+    console.debug(`Percentage of accepted issues in the `);
     return totalIssues;
 };
