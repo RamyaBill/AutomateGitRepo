@@ -4,7 +4,8 @@ module.exports = async ({github, context, core}) => {
 
     // Get dates for last month
     const first_day = new Date();
-    first_day.setMonth(first_day.getMonth() - 1);
+    //  first_day.setMonth(first_day.getMonth() - 1);
+    first_day.setMonth(first_day.getMonth());
     first_day.setDate(1);
 
       // Query all issues created in the last month
