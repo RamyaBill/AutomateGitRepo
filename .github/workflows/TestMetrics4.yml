@@ -48,11 +48,11 @@ jobs:
               owner,
               repo,
               since: first_day.toISOString().slice(0, 10),
-              creator: excludedUsers.join(','),
               state: 'all'
           });
-          
-          const lastMonthIssues = lastMonthIssuesResponse.data;
+          const lastMonthIssuesTotal = lastMonthIssuesResponse.data;
+          const lastMonthIssues = lastMonthIssuesResponse.data.filter(issue => !excludedUsers.includes(issue.user.login));
+          const
            // Filter the last month issues to find accepted issues
            const acceptedIssues = lastMonthIssues.filter(issue => {
             return issue.labels.some(label => label.name === acceptLabel);
