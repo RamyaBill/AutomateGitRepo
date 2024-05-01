@@ -32,6 +32,11 @@ jobs:
         echo "$first_day..$last_day"
         echo "last_month=$first_day..$last_day" >> "$GITHUB_ENV"
 
+    - name: Run JavaScript script
+      run: node percentAcceptedIssues.js
+      env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Run issue-metrics tool
       id: issue-metrics
       uses: github/issue-metrics@v2
