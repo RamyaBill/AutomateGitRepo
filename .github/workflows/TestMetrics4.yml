@@ -37,6 +37,14 @@ jobs:
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}    
 
+    - name: Filter inactive issues
+      id: filter-inactive-issues
+      uses: actions/github-script@v6
+      with:
+        script: |
+            const script = require('./.github/workflows/scripts/percentAcceptedIssues.js');
+            return await script({github, context, core});
+            
     - name: Run issue-metrics tool for issues opened in this month
       id: issue-metrics1
       uses: github/issue-metrics@v3
