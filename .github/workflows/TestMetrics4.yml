@@ -24,15 +24,11 @@ jobs:
       run: |
         # Calculate the first day of the previous month
         first_day=$(date -d "last month" +%Y-%m-01)
-        echo "first_day=$first_day" >> "$GITHUB_ENV"
-
         # Calculate the last day of the previous month
         last_day=$(date -d "$first_day +1 month -1 day" +%Y-%m-%d)
-
         #Set an environment variable with the date range
         echo "$first_day..$last_day"
         echo "last_month=$first_day..$last_day" >> "$GITHUB_ENV"
-
     - name: Find Accepted issues percentage
       id: accept-percent-issues
       uses: actions/github-script@v6
@@ -40,23 +36,23 @@ jobs:
         script: |
           const { owner, repo } = context.repo;
           const acceptLabel = "Status: Accepted";
-          
-          const first_day = ${{ env.first_day }} 
+          // Get dates for last month
+          const first_day = new Date();
+          first_day.setMonth(first_day.getMonth() - 1);
+          first_day.setDate(1);
           
           // Query all issues created in the last month
           const lastMonthIssuesResponse = await github.rest.issues.listForRepo({
               owner,
               repo,
-              since: first_day,
+              since: first_day.toISOString().slice(0, 10),
               state: 'all'
           });
           const lastMonthIssues = lastMonthIssuesResponse.data;
-
            // Filter the last month issues to find accepted issues
            const acceptedIssues = lastMonthIssues.filter(issue => {
             return issue.labels.some(label => label.name === acceptLabel);
           });
-
           const totalIssues = lastMonthIssues.length;
           console.log(`Total Issues in the last month: ${totalIssues}`);
           console.log(`Accepted Issues in the last month: ${acceptedIssues.length}`);
@@ -131,12 +127,3 @@ jobs:
                 <br></br>
                 <br></br>
                 <p>${{ steps.run-script.outputs.result}}</p></code>
-
-         
-
-              
-                
-                
-
-
-     
