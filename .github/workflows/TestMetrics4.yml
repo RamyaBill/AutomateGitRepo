@@ -37,6 +37,13 @@ jobs:
       uses: actions/github-script@v6
       with:
         script: |
+          const { owner, repo } = context.repo;
+          const acceptLabel = "Status: Accepted";
+          // Get dates for last month
+          const first_day = new Date();
+          first_day.setMonth(first_day.getMonth() - 1);
+          first_day.setDate(1);
+          
           // Query all issues created in the last month
           const lastMonthIssuesResponse = await github.rest.issues.listForRepo({
               owner,
