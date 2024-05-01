@@ -31,7 +31,8 @@ jobs:
         #Set an environment variable with the date range
         echo "$first_day..$last_day"
         echo "last_month=$first_day..$last_day" >> "$GITHUB_ENV"
-
+        
+    - uses: actions/checkout@v3
     - name: Find Accepted issues percentage
       id: accept-percent-issues
       uses: actions/github-script@v6
