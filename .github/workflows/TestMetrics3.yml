@@ -49,18 +49,19 @@ jobs:
       with:
         result-encoding: string
         script: |
-          const metrics = JSON.parse('${{ steps.issue-metrics1.outputs.metrics }}');
-          const issues = { ...metrics.issues };
-          let issuesString = '';
-          for (const key in issues) {
-            if (Object.hasOwnProperty.call(issues, key)) {
+            const metrics = JSON.parse('${{ steps.issue-metrics1.outputs.metrics }}');
+            const issues = { ...metrics.issues };
+            let issuesTable = '<table>\n';
+            issuesTable += '<tr><th>Title</th><th>URL</th><th>Author</th><th>Time to first response</th><th>Time to close</th><th>Time to answer</th><th>Time spent in Status: Open</th><th>Time spent in Status:Accepted</th><th>Time spent in Status:Pending</th></tr>\n';
+            for (const key in issues) {
+              if (Object.hasOwnProperty.call(issues, key)) {
                   const issue = issues[key];
-                 issuesString += `| ${issue.title} | ${issue.html_url} | [${issue.author}](${issue.html_url}) | ${issue.time_to_first_response} | ${issue.time_to_close} | ${issue.time_to_answer} | ${issue.label_metrics['Status: Open']} | ${issue.label_metrics['Status:Accepted']} | ${issue.label_metrics['Status:Pending']} |\n`;
+                  issuesTable += `<tr><td>${issue.title}</td><td><a href="${issue.html_url}">${issue.html_url}</a></td><td>${issue.author}</td><td>${issue.time_to_first_response}</td><td>${issue.time_to_close}</td><td>${issue.time_to_answer}</td><td>${issue.label_metrics['Status: Open']}</td><td>${issue.label_metrics['Status:Accepted']}</td><td>${issue.label_metrics['Status:Pending']}</td></tr>\n`;
                 }
             }
-
-          console.log(issuesString);
-          return issuesString;
+              issuesTable += '</table>\n';
+              console.log(issuesTable);
+              return issuesTable;
           
     - name: Log issues string
       run: echo "${{steps.run-script.outputs.result}}"
@@ -74,23 +75,25 @@ jobs:
           message: |
               <code>
               <p>
-                  |----------- Metric ------------|--------------Average --------|</p>
-               <p>|-------------------------------|------------------------------|</p>
-               <p>| Time to first response | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_to_first_response }} |</p>
-               <p>| Time to close | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_to_close }}  |</p>
-               <p>| Time spent in Status: Open | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_in_labels['Status: Open'] }} |</p>
-               <p>| Time spent in Status:Accepted | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_in_labels['Status:Accepted'] }} |</p>
-               <p>| Time spent in Status:Pending | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_in_labels['Status:Pending'] }} |</p>
-               <p> </p>
+              <table>
+              <tr><th>Metric</th><th>Average</th></tr>
+               <tr><td>Time to first response </td><td> ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_to_first_response }} </td></tr>
+               <tr><td> Time to close </td><td> ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_to_close }}  </td></tr>
+               <tr><td> Time spent in Status: Open </td><td> ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_in_labels['Status: Open'] }} </td></tr>
+               <tr><td> Time spent in Status:Accepted </td><td> ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_in_labels['Status:Accepted'] }} </td></tr>
+               <tr><td> Time spent in Status:Pending </td><td> ${{ fromJSON(steps.issue-metrics1.outputs.metrics).average_time_in_labels['Status:Pending'] }} </td></tr>
+               </table>
+                <br></br>
+                <br></br>
                 <p>
-                <p>|----------- Metric ------------|--------------Average --------|</p>
-                <p>|-------------------------------|------------------------------|</p>
-                <p>| Number of items that remain open | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).num_items_opened }} | </p>
-                <p>| Number of items closed | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).num_items_closed }} | </p>
-                <p>| Total number of items created | ${{ fromJSON(steps.issue-metrics1.outputs.metrics).total_item_count }} | </p>
-                <p> </p>
-                <p>| Title | URL | Author | Time to first response | Time to close | Time to answer | Time spent in Status: Open | Time spent in Status:Accepted | Time spent in Status:Pending |</p>
-                <p>   |------- | --- |------ | --- | --- | --- | --- | --- | --- | </p>
+                <table>
+                <tr><th>Metric</th><th>Count</th></tr>
+                <tr><td> Number of items that remain open </td><td>${{ fromJSON(steps.issue-metrics1.outputs.metrics).num_items_opened }}</td></tr>
+                <tr><td>Number of items closed</td><td>${{ fromJSON(steps.issue-metrics1.outputs.metrics).num_items_closed }}</td></tr>
+                <tr><td>Total number of items created</td><td>${{ fromJSON(steps.issue-metrics1.outputs.metrics).total_item_count }}</td></tr>
+                </table>
+                <br></br>
+                <br></br>
                 <p>${{ steps.run-script.outputs.result}}</p></code>
 
          
