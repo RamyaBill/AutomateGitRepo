@@ -2,17 +2,11 @@ module.exports = async ({github, context, core}) => {
     const { owner, repo } = context.repo;
     const acceptLabel = "Status: Accepted";
 
-    // Get dates for last month
-    const first_day = new Date();
-    //  first_day.setMonth(first_day.getMonth() - 1);
-    first_day.setMonth(first_day.getMonth());
-    first_day.setDate(1);
 
       // Query all issues created in the last month
      const lastMonthIssuesResponse = await github.rest.issues.listForRepo({
         owner,
         repo,
-        since: first_day.toISOString().slice(0, 10),
         state: 'all'
      });
 
@@ -24,6 +18,8 @@ module.exports = async ({github, context, core}) => {
     });
 
     const totalIssues = lastMonthIssues.length;
+
+    console.log(`totalIssues in the last month: ${totalIssues}%`);
   
     // Calculate the percentage of accepted issues
     const percentage = ((acceptedIssues.length / totalIssues) * 100).toFixed(2);
