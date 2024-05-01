@@ -39,8 +39,7 @@ jobs:
       with:
         script: |
             const script = require('./.github/workflows/scripts/percentAcceptedIssues.js');
-            const percentage = return await script({github, context, core});
-            console.log(`Percentage of accepted issues: ${percentage}%`);
+            return await script({github, context, core});
             
     - name: Run issue-metrics tool for issues opened in this month
       id: issue-metrics1
