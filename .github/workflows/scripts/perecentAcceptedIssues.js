@@ -28,4 +28,6 @@ module.exports = async ({github, context, core}) => {
     const percentage = ((acceptedIssues.length / totalIssues) * 100).toFixed(2);
 
     console.log(`Percentage of accepted issues in the last month: ${percentage}%`);
+
+    return percentage;
 };
