@@ -132,7 +132,7 @@ jobs:
                 <tr><td> Number of items that remain open </td><td>${{ fromJSON(steps.issue-metrics1.outputs.metrics).num_items_opened }}</td></tr>
                 <tr><td>Number of items closed</td><td>${{ fromJSON(steps.issue-metrics1.outputs.metrics).num_items_closed }}</td></tr>
                 <tr><td>Total number of items created</td><td>${{ fromJSON(steps.issue-metrics1.outputs.metrics).total_item_count }}</td></tr>
-                <tr><td>Percentage of escalated tickets</td><td>${{steps.accept-percent-issues.outputs.result }}%</td></tr>
+                <tr><td>Percentage of escalated tickets</td><td>${{fromJSON(steps.accept-percent-issues.outputs.result) }}%</td></tr>
                 </table>
                 <br></br>
                 <br></br>
