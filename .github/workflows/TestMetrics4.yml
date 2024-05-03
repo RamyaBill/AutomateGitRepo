@@ -77,7 +77,7 @@ jobs:
       uses: github/issue-metrics@v3
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        LABELS_TO_MEASURE: 'Status: Open,Status:Accepted,Status:Pending'
+        LABELS_TO_MEASURE: 'Status: Open,Status: Accepted,Status: Pending'
         SEARCH_QUERY: 'repo:RamyaBill/AutomateGitRepo is:issue created:2024-05-02..2024-05-03'
            
     - name: Print output of open issues from the metrics tool 
