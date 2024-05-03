@@ -46,13 +46,13 @@ jobs:
 
           const excludedUsers = ['github-actions']; 
           //TO DO remove this testdate line
-          const testdate = "2024-04-28";
+          const testdate = "2024-05-02";
           
           // Query all issues created in the last month
           const lastMonthIssuesResponse = await github.rest.issues.listForRepo({
               owner,
               repo,
-              since: "2024-05-01",
+              since: "2024-05-02",
               state: 'all'
           });
           const lastMonthIssuesTotal = lastMonthIssuesResponse.data;
@@ -78,7 +78,7 @@ jobs:
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         LABELS_TO_MEASURE: 'Status: Open,Status:Accepted,Status:Pending'
-        SEARCH_QUERY: 'repo:RamyaBill/AutomateGitRepo is:issue created:2024-05-01..2024-05-03'
+        SEARCH_QUERY: 'repo:RamyaBill/AutomateGitRepo is:issue created:2024-05-02..2024-05-03'
            
     - name: Print output of open issues from the metrics tool 
       run: echo "${{ steps.issue-metrics1.outputs.metrics }}"
