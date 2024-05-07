@@ -42,12 +42,13 @@ jobs:
           const { owner, repo } = context.repo;
           const acceptLabel = "Status: Accepted";
           const excludedUsers = ['github-actions']; 
+          const firstDay = process.env.first_day;
           
           // Query all issues created in the last month
           const lastMonthIssuesResponse = await github.rest.issues.listForRepo({
               owner,
               repo,
-              since: "2024-05-02",
+              since: firstDay,
               state: 'all'
           });
           const lastMonthIssuesTotal = lastMonthIssuesResponse.data;
