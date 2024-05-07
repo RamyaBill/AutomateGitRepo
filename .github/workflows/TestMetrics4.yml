@@ -43,22 +43,24 @@ jobs:
           const acceptLabel = "Status: Accepted";
           const excludedUsers = ['github-actions']; 
           const firstDay = process.env.first_day;
+          const lastDay = process.env.last_day;
           
           // Query all issues created in the last month
           const lastMonthIssuesResponse = await github.rest.issues.listForRepo({
               owner,
               repo,
               since: firstDay,
+              until: lastDay,
               state: 'all'
           });
           const lastMonthIssuesTotal = lastMonthIssuesResponse.data;
-          const lastMonthIssues = lastMonthIssuesResponse.data.filter(issue => !excludedUsers.includes(issue.user.login));
+          //const lastMonthIssues = lastMonthIssuesResponse.data.filter(issue => !excludedUsers.includes(issue.user.login));
           
            // Filter the last month issues to find accepted issues
-           const acceptedIssues = lastMonthIssues.filter(issue => {
+           const acceptedIssues = lastMonthIssuesTotal.filter(issue => {
             return issue.labels.some(label => label.name === acceptLabel);
           });
-          const totalIssues = lastMonthIssues.length;
+          const totalIssues = lastMonthIssuesTotal.length;
           console.log(`Total Issues in the last month: ${totalIssues}`);
           console.log(`Accepted Issues in the last month: ${acceptedIssues.length}`);
   
