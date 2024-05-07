@@ -93,11 +93,11 @@ jobs:
             const metrics = JSON.parse('${{ steps.issue-metrics1.outputs.metrics }}');
             const issues = { ...metrics.issues };
             let issuesTable = '<table>\n';
-            issuesTable += '<tr><th>Title</th><th>URL</th><th>Author</th><th>Time to first response</th><th>Time to close</th><th>Time spent in Status: Open</th><th>Time spent in Status: Accepted</th><th>Time spent in Status: Pending</th></tr>\n';
+            issuesTable += '<tr><th>Title</th><th>Time to first response</th><th>Time to close</th><th>Time spent in Status: Open</th><th>Time spent in Status: Accepted</th><th>Time spent in Status: Pending</th></tr>\n';
             for (const key in issues) {
               if (Object.hasOwnProperty.call(issues, key)) {
                   const issue = issues[key];
-                  issuesTable += `<tr><td>${issue.title}</td><td><a href="${issue.html_url}">${truncateUrl(issue.html_url)}</a></td><td>${issue.author}</td><td>${issue.time_to_first_response}</td><td>${issue.time_to_close}</td><td>${issue.label_metrics['Status: Open']}</td><td>${issue.label_metrics['Status: Accepted']}</td><td>${issue.label_metrics['Status: Pending']}</td></tr>\n`;
+                  issuesTable += `<tr><td>${issue.title}</td><td>${issue.time_to_first_response}</td><td>${issue.time_to_close}</td><td>${issue.label_metrics['Status: Open']}</td><td>${issue.label_metrics['Status: Accepted']}</td><td>${issue.label_metrics['Status: Pending']}</td></tr>\n`;
                 }
             }
               issuesTable += '</table>\n';
