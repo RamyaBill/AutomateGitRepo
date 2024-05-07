@@ -27,7 +27,8 @@ jobs:
         first_day=$(date -d "last month" +%Y-%m-01)
         # Calculate the last day of the previous month
         last_day=$(date -d "$first_day +1 month -1 day" +%Y-%m-%d)
-        #Set an environment variable with the date range
+        
+        #Set environment variables with the date range
         echo "first_day=$first_day" >> "$GITHUB_ENV"
         echo "last_day=$last_day" >> "$GITHUB_ENV"
         echo "$first_day..$last_day"
@@ -40,21 +41,13 @@ jobs:
         script: |
           const { owner, repo } = context.repo;
           const acceptLabel = "Status: Accepted";
-          // Get dates for last month
-          const first_day = new Date();
-          //first_day.setMonth(first_day.getMonth());
-          first_day.setMonth(first_day.getMonth() - 1);
-          first_day.setDate(1);
-
-          console.log(`showing issues created after : ${first_day}`);
-
           const excludedUsers = ['github-actions']; 
           
           // Query all issues created in the last month
           const lastMonthIssuesResponse = await github.rest.issues.listForRepo({
               owner,
               repo,
-              since: first_day.toISOString().slice(0, 10),
+              since: ${{ env.first_day }}
               state: 'all'
           });
           const lastMonthIssuesTotal = lastMonthIssuesResponse.data;
@@ -80,7 +73,7 @@ jobs:
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         LABELS_TO_MEASURE: 'Status: Open,Status: Accepted,Status: Pending'
-        SEARCH_QUERY: 'repo:RamyaBill/AutomateGitRepo is:issue created:2024-05-02..2024-05-03'
+        SEARCH_QUERY: 'repo:RamyaBill/AutomateGitRepo is:issue created:${{ env.last_month }}'
            
     - name: Print output of open issues from the metrics tool 
       run: echo "${{ steps.issue-metrics1.outputs.metrics }}"
