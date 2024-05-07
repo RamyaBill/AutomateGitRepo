@@ -2,7 +2,7 @@ name: Testing Monthly issue metrics
 on:
   workflow_dispatch:
   schedule:
-    - cron: '* * * * 1-5'
+    - cron: '0 0 1 * *'
 
 permissions:
   issues: write
@@ -19,6 +19,7 @@ jobs:
           script: |
             // - github: A pre-authenticated octokit/rest.js client
             const { owner, repo } = context.repo;
+            
     - name: Get dates for last month
       shell: bash
       run: |
@@ -46,14 +47,12 @@ jobs:
           console.log(`showing issues created after : ${first_day}`);
 
           const excludedUsers = ['github-actions']; 
-          //TO DO remove this testdate line
-          const testdate = "2024-05-02";
           
           // Query all issues created in the last month
           const lastMonthIssuesResponse = await github.rest.issues.listForRepo({
               owner,
               repo,
-              since: "2024-05-02",
+              since: first_day.toISOString().slice(0, 10),
               state: 'all'
           });
           const lastMonthIssuesTotal = lastMonthIssuesResponse.data;
