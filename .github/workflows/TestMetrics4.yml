@@ -97,12 +97,17 @@ jobs:
             for (const key in issues) {
               if (Object.hasOwnProperty.call(issues, key)) {
                   const issue = issues[key];
-                  issuesTable += `<tr><td>${issue.title}</td><td>${issue.time_to_first_response}</td><td>${issue.time_to_close}</td><td>${issue.label_metrics['Status: Open']}</td><td>${issue.label_metrics['Status: Accepted']}</td><td>${issue.label_metrics['Status: Pending']}</td></tr>\n`;
+                  issuesTable += `<tr><td>${issue.title}</td><td><a href="${issue.html_url}">#${extractIssueNumber(issue.html_url)}</a></td><td>${issue.author}</td><td>${issue.time_to_first_response}</td><td>${issue.time_to_close}</td><td>${issue.label_metrics['Status: Open']}</td><td>${issue.label_metrics['Status: Accepted']}</td><td>${issue.label_metrics['Status: Pending']}</td></tr>\n`;
                 }
             }
               issuesTable += '</table>\n';
               console.log(issuesTable);
               return issuesTable;
+              
+              function extractIssueNumber(url) {
+              const parts = url.split('/');
+              return parts[parts.length - 1];
+              }
           
     - name: Log issues string
       run: echo "${{steps.run-script.outputs.result}}"
