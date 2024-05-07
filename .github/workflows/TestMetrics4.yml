@@ -47,7 +47,7 @@ jobs:
           const lastMonthIssuesResponse = await github.rest.issues.listForRepo({
               owner,
               repo,
-              since: ${{ env.first_day }}
+              since: "2024-05-02",
               state: 'all'
           });
           const lastMonthIssuesTotal = lastMonthIssuesResponse.data;
