@@ -54,11 +54,12 @@ jobs:
               state: 'all'
           });
           const lastMonthIssuesTotal = lastMonthIssuesResponse.data;
-          //const lastMonthIssues = lastMonthIssuesResponse.data.filter(issue => !excludedUsers.includes(issue.user.login));
+          //const lastMonthIssues = lastMonthIssuesResponse.data.filter(issue => !excludedUsers.includes(issue.user.login)); incase we need to filter bot issues
           
            // Filter the last month issues to find accepted issues
            const acceptedIssues = lastMonthIssuesTotal.filter(issue => {
             return issue.labels.some(label => label.name === acceptLabel);
+            //const acceptedIssues = lastMonthIssues.filter(issue => { return issue.labels.some(label => label.name === acceptLabel);
           });
           const totalIssues = lastMonthIssuesTotal.length;
           console.log(`Total Issues in the last month: ${totalIssues}`);
