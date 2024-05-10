@@ -46,6 +46,7 @@ jobs:
       run: echo "${{ steps.issue-metrics1.outputs.metrics }}"
 
     - name: Notify MS Teams channel with Closed issues
+      if: steps.issue-metrics1.outputs.metrics != ''
       id: notify-ms-teams-open
       uses: simbo/msteams-message-card-action@latest
       with:
