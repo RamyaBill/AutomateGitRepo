@@ -45,34 +45,6 @@ jobs:
     - name: Print output of closed issues from the metrics tool 
       run: echo "${{ steps.issue-metrics1.outputs.metrics }}"
 
-    - name: Run custom script
-      id: run-script
-      uses: actions/github-script@v7
-      with:
-        result-encoding: string
-        script: |
-            const metrics = JSON.parse('${{ steps.issue-metrics1.outputs.metrics }}');
-            const issues = { ...metrics.issues };
-            let issuesTable = '<table>\n';
-            issuesTable += '<tr><th>Issue</th><th>Time to first response</th><th>Time to close</th><th>Time spent in Status: Open</th><th>Time spent in Status: Accepted</th><th>Time spent in Status: Pending</th></tr>\n';
-            for (const key in issues) {
-              if (Object.hasOwnProperty.call(issues, key)) {
-                  const issue = issues[key];
-                  issuesTable += `<tr><td><a href="${issue.html_url}">#${extractIssueNumber(issue.html_url)}</a></td><td>${issue.time_to_first_response}</td><td>${issue.time_to_close}</td><td>${issue.label_metrics['Status: Open']}</td><td>${issue.label_metrics['Status: Accepted']}</td><td>${issue.label_metrics['Status: Pending']}</td></tr>\n`;
-                }
-            }
-              issuesTable += '</table>\n';
-              console.log(issuesTable);
-              return issuesTable;
-              
-              function extractIssueNumber(url) {
-              const parts = url.split('/');
-              return parts[parts.length - 1];
-              }
-          
-    - name: Log issues string
-      run: echo "${{steps.run-script.outputs.result}}"
-
     - name: Notify MS Teams channel with Closed issues
       id: notify-ms-teams-open
       uses: simbo/msteams-message-card-action@latest
@@ -98,8 +70,6 @@ jobs:
                 <tr><td> Number of items that remain open </td><td>${{ fromJSON(steps.issue-metrics1.outputs.metrics).num_items_opened }}</td></tr>
                 <tr><td>Number of items closed</td><td>${{ fromJSON(steps.issue-metrics1.outputs.metrics).num_items_closed }}</td></tr>
                 <tr><td>Total number of items created</td><td>${{ fromJSON(steps.issue-metrics1.outputs.metrics).total_item_count }}</td></tr>
-                <tr><td>Percentage of escalated tickets</td><td>${{fromJSON(steps.accept-percent-issues.outputs.result) }}%</td></tr>
                 </table>
                 <br></br>
                 <br></br>
-                <p>${{ steps.run-script.outputs.result}}</p></code>
