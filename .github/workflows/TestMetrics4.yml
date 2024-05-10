@@ -115,7 +115,7 @@ jobs:
       uses: simbo/msteams-message-card-action@latest
       with:
           webhook: ${{ secrets.TEAMS_INCOMING_WEBHOOK_URL }}
-          title: Payara Github community issues opened in this month 
+          title: Payara Github community issues opened in the last month 
           message: |
               <code>
               <p>
